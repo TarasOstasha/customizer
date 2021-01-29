@@ -12,6 +12,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatButtonToggleModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
