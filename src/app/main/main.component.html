@@ -1,0 +1,95 @@
+<mat-card>
+</mat-card>
+<mat-card>
+    <mat-card-header color="accent">
+        <!-- <div mat-card-avatar></div> -->
+        <mat-card-title>1. Choose the Style</mat-card-title>
+        <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+    </mat-card-header>
+    <!-- <div mat-card-image></div> -->
+    <div mat-card-avatar></div>
+    <mat-card-content>
+        <p>
+            <!-- <p>
+                <strong>Color</strong>
+            </p> -->
+            <strong class="strong">Color:</strong>
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle value="bold" (click)="chooseBlank()">Blank</mat-button-toggle>
+                <mat-button-toggle value="italic">Full Color</mat-button-toggle>
+            </mat-button-toggle-group>
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle value="bold">One Sided</mat-button-toggle>
+                <mat-button-toggle value="italic">Two Sided</mat-button-toggle>
+            </mat-button-toggle-group>
+        </p>
+    </mat-card-content>
+    <!-- <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions> -->
+</mat-card>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>2. Select the Material</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="colorFlag">
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Select a Material Option</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let material of materials" [value]="material.value">
+                        <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </p>
+    </mat-card-content>
+</mat-card>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>3. Define the Dimensions</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="materialFlag">
+        <p>
+            <strong>Width: </strong>
+            <mat-form-field class="example-form-field">
+                <mat-label>Ft</mat-label>
+                <input matInput type="text" [(ngModel)]="value">
+                <!-- <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                    <mat-icon>close</mat-icon>
+                </button> -->
+            </mat-form-field>
+            <mat-form-field class="example-form-field">
+                <mat-label>In</mat-label>
+                <input matInput type="text" [(ngModel)]="value">
+            </mat-form-field>
+        </p>
+        <p>
+            <strong>Height:</strong>
+            <mat-form-field class="example-form-field">
+                <mat-label>Ft</mat-label>
+                <input matInput type="text" [(ngModel)]="value">
+                <!-- <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                        <mat-icon>close</mat-icon>
+                    </button> -->
+            </mat-form-field>
+            <mat-form-field class="example-form-field">
+                <mat-label>In</mat-label>
+                <input matInput type="text" [(ngModel)]="value">
+            </mat-form-field>
+        </p>
+    </mat-card-content>
+</mat-card>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>4. Select A Finishing Type</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from
+            Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu
+            was originally bred for hunting.
+        </p>
+    </mat-card-content>
+</mat-card>
