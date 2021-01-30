@@ -1,4 +1,5 @@
-<form>
+<form #postForm="ngForm">
+    <!-- 1. Choose the Style -->
     <mat-card>
         <mat-card-header color="accent">
             <!-- <div mat-card-avatar></div> -->
@@ -9,35 +10,57 @@
         <div mat-card-avatar></div>
         <mat-card-content>
             <p>
-                <!-- <p>
-                            <strong>Color</strong>
-                        </p> -->
                 <strong class="strong">Color:</strong>
                 <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
                     <mat-button-toggle value="bold" (click)="chooseBlank()">Blank</mat-button-toggle>
-                    <mat-button-toggle value="italic">Full Color</mat-button-toggle>
+                    <mat-button-toggle value="italic" (click)="chooseFullColor()">Full Color</mat-button-toggle>
                 </mat-button-toggle-group>
-                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-                    <mat-button-toggle value="bold">One Sided</mat-button-toggle>
-                    <mat-button-toggle value="italic">Two Sided</mat-button-toggle>
+                <mat-button-toggle-group name="fontStyle" aria-label="Font Style" *ngIf="fullColor">
+                    <mat-button-toggle value="bold" (click)="chooseOneSided()">One Sided</mat-button-toggle>
+                    <mat-button-toggle value="italic" (click)="chooseTwoSided()">Two Sided</mat-button-toggle>
                 </mat-button-toggle-group>
             </p>
         </mat-card-content>
-        <!-- <mat-card-actions>
-                    <button mat-button>LIKE</button>
-                    <button mat-button>SHARE</button>
-                  </mat-card-actions> -->
+
     </mat-card>
+    <!-- 2. Select the Material -->
     <mat-card>
         <mat-card-header>
             <mat-card-title>2. Select the Material</mat-card-title>
         </mat-card-header>
+        <!-- BLANK COLOR SELECTED -->
         <mat-card-content *ngIf="colorFlag">
             <p>
                 <mat-form-field appearance="fill">
                     <mat-label>Select a Material Option</mat-label>
                     <mat-select>
-                        <mat-option *ngFor="let material of materials" [value]="material.value">
+                        <mat-option *ngFor="let material of materials" [value]="material.value" name="material">
+                            <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </p>
+        </mat-card-content>
+        <!-- FULL COLOR ONE SIDE SELECTED -->
+        <mat-card-content *ngIf="oneSidedMaterialFlag">
+            <p>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select a Material Option</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let material of oneSidedMaterial" [value]="material.value" name="oneSidedMaterial">
+                            <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </p>
+        </mat-card-content>
+        <!-- FULL COLOR TWO SIDE SELECTED -->
+        <mat-card-content *ngIf="twoSidedMaterialFlag">
+            <p>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select a Material Option</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let material of twoSidedMaterial" [value]="material.value" name="twoSidedMaterial">
                             <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
                         </mat-option>
                     </mat-select>
@@ -45,6 +68,7 @@
             </p>
         </mat-card-content>
     </mat-card>
+    <!-- 3. Define the Dimensions -->
     <mat-card>
         <mat-card-header>
             <mat-card-title>3. Define the Dimensions</mat-card-title>
@@ -54,30 +78,31 @@
                 <strong>Width: </strong>
                 <mat-form-field class="example-form-field">
                     <mat-label>Ft</mat-label>
-                    <input matInput type="text" [(ngModel)]="value">
+                    <input matInput type="text" [(ngModel)]="enteredWidthFt" name="widthFt">
                     <!-- <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                                 <mat-icon>close</mat-icon>
                             </button> -->
                 </mat-form-field>
                 <mat-form-field class="example-form-field">
                     <mat-label>In</mat-label>
-                    <input matInput type="text" [(ngModel)]="value">
+                    <input matInput type="text" [(ngModel)]="enteredWidthIn" name="widthIn">
                 </mat-form-field>
             </p>
             <p>
                 <strong>Height:</strong>
                 <mat-form-field class="example-form-field">
                     <mat-label>Ft</mat-label>
-                    <input matInput type="text" [(ngModel)]="value">
+                    <input matInput type="text" [(ngModel)]="enteredHeightFt" name="heightFt">
                     <!-- <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                                     <mat-icon>close</mat-icon>
                                 </button> -->
                 </mat-form-field>
                 <mat-form-field class="example-form-field">
                     <mat-label>In</mat-label>
-                    <input matInput type="text" [(ngModel)]="value">
+                    <input matInput type="text" [(ngModel)]="enteredHeightIn" name="heightIn">
                 </mat-form-field>
             </p>
+            <strong>Total (in Square Ft): </strong>{{ enteredWidthFt * enteredHeightFt }}
             <p>
                 <strong>
                     The finished banner will be guaranteed
@@ -87,6 +112,7 @@
             </p>
         </mat-card-content>
     </mat-card>
+    <!-- 4. Select A Finishing Type -->
     <mat-card>
         <mat-card-header>
             <mat-card-title>4. Select A Finishing Type</mat-card-title>
@@ -97,7 +123,7 @@
                     <mat-label>Select a Finishing Type</mat-label>
                     <mat-select>
                         <mat-option *ngFor="let type of finishType" [value]="type.value">
-                            <span (click)="selectedMaterial(material.value)">{{ type.value }}</span>
+                            <span (click)="selectedType(type.value)">{{ type.value }}</span>
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -105,6 +131,6 @@
         </mat-card-content>
     </mat-card>
     <div class="send">
-        <button mat-raised-button color="primary">Send Request</button>
+        <button (click)="sendData(postForm)" mat-raised-button color="primary">Send Request</button>
     </div>
 </form>
