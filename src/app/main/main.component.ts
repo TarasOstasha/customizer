@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Size } from '../models/size';
 
@@ -10,12 +11,16 @@ import { Size } from '../models/size';
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
+  // form group
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
   // flags to change select state
   colorFlag: boolean;
   fullColor: boolean;
   materialFlag: boolean;
   oneSidedMaterialFlag: boolean;
   twoSidedMaterialFlag: boolean;
+  addressFlag: boolean;
 
   enteredWidthFt: number;
   enteredWidthIn: number;
@@ -70,9 +75,15 @@ export class MainComponent implements OnInit {
     { value: 'Please Select a Finishing Type' },
   ]
 
-  constructor() { }
+  constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.firstFormGroup = this._formBuilder.group({
+      userName: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      address: ['', Validators.required]
+    });
   }
 
   chooseBlank() {
@@ -122,8 +133,28 @@ export class MainComponent implements OnInit {
     console.log(this.sizeData);
     form.resetForm();
   }
-  resetForm() {
 
+  // sendAddress(form: NgForm) {
+  //   if(form.invalid) {
+  //     return
+  //   }
+  //   console.log(form.value.name)
+
+  //   form.resetForm();
+
+  // }
+  sendAddress() {
+    const userData = {
+      name: this.firstFormGroup.controls.userName.value,
+      address: this.secondFormGroup.controls.address.value
+    }
+    console.log(userData);
   }
+
+
+  goToNext() {
+    this.addressFlag = true;
+  }
+
 
 }
