@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatInputModule,
     MatButtonModule,
     MatListModule,
-    MatStepperModule
+    MatStepperModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

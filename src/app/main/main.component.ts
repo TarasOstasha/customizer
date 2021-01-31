@@ -11,16 +11,25 @@ import { Size } from '../models/size';
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
+  // expand first row
+  step = 0;
+  // disabled flags
+  isDisabledType: boolean = true;
+  isDisabledDimensions: boolean = true;
+  isDisabledMaterial: boolean = true;
   // form group
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
   // flags to change select state
-  colorFlag: boolean;
+  blankColorFlag: boolean = true;
   fullColor: boolean;
   materialFlag: boolean;
   oneSidedMaterialFlag: boolean;
   twoSidedMaterialFlag: boolean;
+
+
+
   addressFlag: boolean;
   nextBtnFlag: boolean = true;
   sendRequestBtn: boolean = true;
@@ -89,32 +98,12 @@ export class MainComponent implements OnInit {
     });
   }
 
-  chooseBlank() {
-    this.colorFlag = true;
-    this.fullColor = false;
-    this.oneSidedMaterialFlag = false;
-    this.twoSidedMaterialFlag = false;
-  }
 
-  chooseFullColor() {
-    this.fullColor = true;
-    this.materialFlag = false;
-    this.colorFlag = false;
-  }
-
-  chooseOneSided() {
-    this.oneSidedMaterialFlag = true;
-    this.twoSidedMaterialFlag = false;
-  }
-
-  chooseTwoSided() {
-    this.twoSidedMaterialFlag = true;
-    this.oneSidedMaterialFlag = false;
-  }
 
   selectedMaterial(val) {
     console.log('material- ', val)
-    this.materialFlag = true;
+    this.isDisabledDimensions = false;
+    //this.materialFlag = true;
     this.enteredProdMaterial = val;
   }
 
@@ -122,6 +111,39 @@ export class MainComponent implements OnInit {
     this.enteredProdType = val;
     this.nextBtnFlag = false;
   }
+
+  chooseBlank() {
+    this.blankColorFlag = true;
+    this.isDisabledMaterial = false;
+    this.oneSidedMaterialFlag = false;
+    this.twoSidedMaterialFlag = false;
+    this.fullColor = false;
+  }
+  chooseFullColor() {
+    this.isDisabledMaterial = true;
+    this.fullColor = true;
+    this.materialFlag = false;
+    this.isDisabledType = true;
+    this.isDisabledDimensions = true;
+    this.isDisabledMaterial = true;
+  }
+  chooseOneSided() {
+    this.isDisabledMaterial = false;
+    this.blankColorFlag = false;
+    this.oneSidedMaterialFlag = true;
+    this.twoSidedMaterialFlag = false;
+
+  }
+  chooseTwoSided() {
+    this.blankColorFlag = false;
+    this.oneSidedMaterialFlag = false;
+    this.twoSidedMaterialFlag = true;
+    this.isDisabledType = true;
+    this.isDisabledDimensions = true;
+    //this.isDisabledMaterial = true;
+  }
+
+
 
 
 

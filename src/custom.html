@@ -1,0 +1,127 @@
+    <!-- 1. Choose the Style -->
+    <mat-card>
+            <mat-card-header color="accent">
+                <!-- <div mat-card-avatar></div> -->
+                <mat-card-title>1. Choose the Style</mat-card-title>
+                <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+            </mat-card-header>
+            <!-- <div mat-card-image></div> -->
+            <div mat-card-avatar></div>
+            <mat-card-content>
+                <p>
+                    <strong class="strong">Color:</strong>
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                        <mat-button-toggle value="bold" (click)="chooseBlank()">Blank</mat-button-toggle>
+                        <mat-button-toggle value="italic" (click)="chooseFullColor()">Full Color</mat-button-toggle>
+                    </mat-button-toggle-group>
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" *ngIf="fullColor">
+                        <mat-button-toggle value="bold" (click)="chooseOneSided()">One Sided</mat-button-toggle>
+                        <mat-button-toggle value="italic" (click)="chooseTwoSided()">Two Sided</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </p>
+            </mat-card-content>
+    
+        </mat-card>
+        <!-- 2. Select the Material -->
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>2. Select the Material</mat-card-title>
+            </mat-card-header>
+            <!-- BLANK COLOR SELECTED -->
+            <mat-card-content *ngIf="colorFlag">
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a Material Option</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let material of materials" [value]="material.value" name="material">
+                                <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </p>
+            </mat-card-content>
+            <!-- FULL COLOR ONE SIDE SELECTED -->
+            <mat-card-content *ngIf="oneSidedMaterialFlag">
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a Material Option</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let material of oneSidedMaterial" [value]="material.value"
+                                name="oneSidedMaterial">
+                                <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </p>
+            </mat-card-content>
+            <!-- FULL COLOR TWO SIDE SELECTED -->
+            <mat-card-content *ngIf="twoSidedMaterialFlag">
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a Material Option</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let material of twoSidedMaterial" [value]="material.value"
+                                name="twoSidedMaterial">
+                                <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </p>
+            </mat-card-content>
+        </mat-card>
+        <!-- 3. Define the Dimensions -->
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>3. Define the Dimensions</mat-card-title>
+            </mat-card-header>
+            <mat-card-content *ngIf="materialFlag">
+                <p>
+                    <strong>Width: </strong>
+                    <mat-form-field class="example-form-field">
+                        <mat-label>Ft</mat-label>
+                        <input matInput type="text" [(ngModel)]="enteredWidthFt" name="widthFt">
+                    </mat-form-field>
+                    <mat-form-field class="example-form-field">
+                        <mat-label>In</mat-label>
+                        <input matInput type="text" [(ngModel)]="enteredWidthIn" name="widthIn">
+                    </mat-form-field>
+                </p>
+                <p>
+                    <strong>Height:</strong>
+                    <mat-form-field class="example-form-field">
+                        <mat-label>Ft</mat-label>
+                        <input matInput type="text" [(ngModel)]="enteredHeightFt" name="heightFt">
+                    </mat-form-field>
+                    <mat-form-field class="example-form-field">
+                        <mat-label>In</mat-label>
+                        <input matInput type="text" [(ngModel)]="enteredHeightIn" name="heightIn">
+                    </mat-form-field>
+                </p>
+                <strong>Total (in Square Ft): </strong>{{ enteredWidthFt * enteredHeightFt }}
+                <p>
+                    <strong>
+                        The finished banner will be guaranteed
+                        to be within the tolerance of 1/2” to 1"
+                        of the requested dimensions.
+                    </strong>
+                </p>
+            </mat-card-content>
+        </mat-card>
+        <!-- 4. Select A Finishing Type -->
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>4. Select A Finishing Type</mat-card-title>
+            </mat-card-header>
+            <mat-card-content *ngIf="materialFlag">
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a Finishing Type</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let type of finishType" [value]="type.value">
+                                <span (click)="selectedType(type.value)">{{ type.value }}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </p>
+            </mat-card-content>
+        </mat-card>
