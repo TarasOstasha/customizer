@@ -14,6 +14,7 @@ export class MainComponent implements OnInit {
   // form group
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+
   // flags to change select state
   colorFlag: boolean;
   fullColor: boolean;
@@ -21,6 +22,8 @@ export class MainComponent implements OnInit {
   oneSidedMaterialFlag: boolean;
   twoSidedMaterialFlag: boolean;
   addressFlag: boolean;
+  nextBtnFlag: boolean = true;
+  sendRequestBtn: boolean = true;
 
   enteredWidthFt: number;
   enteredWidthIn: number;
@@ -117,18 +120,25 @@ export class MainComponent implements OnInit {
 
   selectedType(val) {
     this.enteredProdType = val;
+    this.nextBtnFlag = false;
   }
 
 
 
   sendData(form: NgForm) {
+    if( this.secondFormGroup.controls.address.value == '' && this.secondFormGroup.controls.address.value == '' ) {
+      alert('Please Fill Out The Form!');
+      return
+    }
     this.sizeData.push({ 
       widthFt: this.enteredWidthFt, 
       widthIn: this.enteredWidthIn, 
       heightFt: this.enteredHeightFt, 
       heightIn: this.enteredHeightIn,
       prodMaterial: this.enteredProdMaterial,
-      prodType: this.enteredProdType 
+      prodType: this.enteredProdType,
+      name: this.firstFormGroup.controls.userName.value,
+      address: this.secondFormGroup.controls.address.value
     });
     console.log(this.sizeData);
     form.resetForm();
@@ -154,6 +164,8 @@ export class MainComponent implements OnInit {
 
   goToNext() {
     this.addressFlag = true;
+    this.nextBtnFlag = true;
+    this.sendRequestBtn = false;
   }
 
 

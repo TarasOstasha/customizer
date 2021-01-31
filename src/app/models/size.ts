@@ -5,4 +5,6 @@ export interface Size {
     heightIn: number;
     prodMaterial: string;
     prodType: string;
+    name: string;
+    address: string;
 }

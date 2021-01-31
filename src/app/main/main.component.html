@@ -127,7 +127,7 @@
         </mat-card-content>
     </mat-card>
     <div class="send">
-        <button mat-raised-button color="primary" (click)="goToNext()">Next</button>
+        <button [disabled]="nextBtnFlag" mat-raised-button color="primary" (click)="goToNext()">Next</button>
     </div>
     <mat-horizontal-stepper linear #stepper *ngIf="addressFlag">
         <mat-step [stepControl]="firstFormGroup">
@@ -157,15 +157,15 @@
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Done</ng-template>
-            <p>You are now done.</p>
+            <p class="done-form">You are now done.</p>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-                <button mat-button (click)="sendAddress()">SEND</button>
+                <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
+                <!-- <button mat-button (click)="sendAddress()">SEND</button> -->
             </div>
         </mat-step>
     </mat-horizontal-stepper>
     <div class="send">
-        <button (click)="sendData(postForm)" mat-raised-button color="primary">Send Request</button>
+        <button [disabled]="sendRequestBtn" (click)="sendData(postForm)" mat-raised-button color="primary">Send Request</button>
     </div>
 </form>
