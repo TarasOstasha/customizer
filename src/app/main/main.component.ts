@@ -28,6 +28,9 @@ export class MainComponent implements OnInit {
   oneSidedMaterialFlag: boolean;
   twoSidedMaterialFlag: boolean;
 
+  // img flags
+  blankImg: boolean;
+  colorImg: boolean;
 
 
   addressFlag: boolean;
@@ -118,6 +121,9 @@ export class MainComponent implements OnInit {
     this.oneSidedMaterialFlag = false;
     this.twoSidedMaterialFlag = false;
     this.fullColor = false;
+    // img
+    this.blankImg = true;
+    this.colorImg = false;
   }
   chooseFullColor() {
     this.isDisabledMaterial = true;
@@ -126,6 +132,10 @@ export class MainComponent implements OnInit {
     this.isDisabledType = true;
     this.isDisabledDimensions = true;
     this.isDisabledMaterial = true;
+    this.addressFlag = false;
+    // img
+    this.colorImg = true;
+    this.blankImg = false;
   }
   chooseOneSided() {
     this.isDisabledMaterial = false;
@@ -140,6 +150,7 @@ export class MainComponent implements OnInit {
     this.twoSidedMaterialFlag = true;
     this.isDisabledType = true;
     this.isDisabledDimensions = true;
+    this.addressFlag = false;
     //this.isDisabledMaterial = true;
   }
 
