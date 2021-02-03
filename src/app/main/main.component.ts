@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -11,6 +11,14 @@ import { Size } from '../models/size';
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
+  myForm: FormGroup;
+  @ViewChild("materialForm", {static: false}) materialForm : ElementRef;
+  f: NgForm;
+  // material selected value
+  blankSelectedValue: string;
+  fullColorOneSideSelectedValue: string;
+  fullColorTwoSideSelectedValue: string;
+
   // expand first row
   step = 0;
   // disabled flags
@@ -41,7 +49,9 @@ export class MainComponent implements OnInit {
   enteredWidthIn: number;
   enteredHeightFt: number;
   enteredHeightIn: number;
-  enteredProdMaterial: string;
+  enteredBlankProdMaterial: string;
+  enteredFullColorOneSideMaterial: string;
+  enteredFullColorTwoSideMaterial: string;
   enteredProdType: string;
 
   sizeData: Size[] = [];
@@ -103,11 +113,27 @@ export class MainComponent implements OnInit {
 
 
 
-  selectedMaterial(val) {
-    console.log('material- ', val)
+  // selectedMaterial(val) {
+  //   console.log('material- ', val)
+  //   this.isDisabledDimensions = false;
+  //   //this.materialFlag = true;
+  //   this.enteredProdMaterial = val;
+  // }
+  
+  selectedBlankMaterial() {
     this.isDisabledDimensions = false;
-    //this.materialFlag = true;
-    this.enteredProdMaterial = val;
+    this.enteredBlankProdMaterial = this.blankSelectedValue;
+    console.log(this.enteredBlankProdMaterial)
+  }
+  selectedFullColorOneSideMaterial() {
+    this.isDisabledDimensions = false;
+    this.enteredFullColorOneSideMaterial = this.fullColorOneSideSelectedValue;
+    console.log(this.enteredFullColorOneSideMaterial)
+  }
+  selectedFullColorTwoSideMaterial() {
+    this.isDisabledDimensions = false;
+    this.enteredFullColorTwoSideMaterial = this.fullColorTwoSideSelectedValue;
+    console.log(this.enteredFullColorTwoSideMaterial)
   }
 
   selectedType(val) {
@@ -125,7 +151,7 @@ export class MainComponent implements OnInit {
     this.blankImg = true;
     this.colorImg = false;
   }
-  chooseFullColor() {
+  chooseFullColor(form: NgForm) {
     this.isDisabledMaterial = true;
     this.fullColor = true;
     this.materialFlag = false;
@@ -136,6 +162,9 @@ export class MainComponent implements OnInit {
     // img
     this.colorImg = true;
     this.blankImg = false;
+    //this.materialForm.resetForm();
+    console.log(this.materialForm)
+    
   }
   chooseOneSided() {
     this.isDisabledMaterial = false;
@@ -159,16 +188,18 @@ export class MainComponent implements OnInit {
 
 
   sendData(form: NgForm) {
-    if( this.secondFormGroup.controls.address.value == '' && this.secondFormGroup.controls.address.value == '' ) {
+    if (this.secondFormGroup.controls.address.value == '' && this.secondFormGroup.controls.address.value == '') {
       alert('Please Fill Out The Form!');
       return
     }
-    this.sizeData.push({ 
-      widthFt: this.enteredWidthFt, 
-      widthIn: this.enteredWidthIn, 
-      heightFt: this.enteredHeightFt, 
+    this.sizeData.push({
+      widthFt: this.enteredWidthFt,
+      widthIn: this.enteredWidthIn,
+      heightFt: this.enteredHeightFt,
       heightIn: this.enteredHeightIn,
-      prodMaterial: this.enteredProdMaterial,
+      blankProdMaterial: this.enteredBlankProdMaterial,
+      fullColorOneSideMaterial: this.enteredFullColorOneSideMaterial,
+      fullColorTwoSideMaterial: this.fullColorTwoSideSelectedValue,
       prodType: this.enteredProdType,
       name: this.firstFormGroup.controls.userName.value,
       address: this.secondFormGroup.controls.address.value

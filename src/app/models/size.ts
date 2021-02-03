@@ -3,7 +3,9 @@ export interface Size {
     widthIn: number;
     heightFt: number;
     heightIn: number;
-    prodMaterial: string;
+    blankProdMaterial: string;
+    fullColorOneSideMaterial: string;
+    fullColorTwoSideMaterial: string;
     prodType: string;
     name: string;
     address: string;

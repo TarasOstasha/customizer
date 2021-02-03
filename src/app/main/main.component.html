@@ -31,27 +31,48 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
         <p>
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" name="materialForm" #materialForm>
                 <mat-label>Select a Material Option</mat-label>
                 <!-- BLANK COLOR SELECTED -->
-                <mat-select *ngIf="blankColorFlag">
-                    <mat-option *ngFor="let material of materials" [value]="material.value" name="material">
+                <!-- <mat-select *ngIf="blankColorFlag"> -->
+                    <!-- <mat-option *ngFor="let material of materials" [value]="material.value" name="material">
                         <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
-                    </mat-option>
+                    </mat-option> -->
+                <!-- </mat-select> -->
+                <mat-select
+                    *ngIf="blankColorFlag" 
+                    [(ngModel)]="blankSelectedValue" 
+                    name="material" 
+                    (selectionChange)="selectedBlankMaterial()">
+                        <mat-option *ngFor="let material of materials" [value]="material.value">
+                            {{ material.value }}
+                        </mat-option>
                 </mat-select>
                 <!-- FULL COLOR ONE SIDE SELECTED -->
-                <mat-select *ngIf="oneSidedMaterialFlag">
-                    <mat-option *ngFor="let material of oneSidedMaterial" [value]="material.value"
-                        name="oneSidedMaterial">
-                        <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
-                    </mat-option>
+                <mat-label>Select a Material Option</mat-label>
+                <mat-select
+                    *ngIf="oneSidedMaterialFlag" 
+                    [(ngModel)]="fullColorOneSideSelectedValue" 
+                    [ngModelOptions]="{standalone: true}" 
+                    (selectionChange)="selectedFullColorOneSideMaterial()"
+                    name="oneSidedMaterial">
+                        <mat-option *ngFor="let material of oneSidedMaterial" [value]="material.value"
+                            name="oneSidedMaterial">
+                            <span>{{ material.value }}</span>
+                        </mat-option>
                 </mat-select>
                 <!-- FULL COLOR TWO SIDE SELECTED -->
-                <mat-select *ngIf="twoSidedMaterialFlag">
-                    <mat-option *ngFor="let material of twoSidedMaterial" [value]="material.value"
-                        name="twoSidedMaterial">
-                        <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
-                    </mat-option>
+                <mat-label>Select a Material Option</mat-label>
+                <mat-select 
+                    *ngIf="twoSidedMaterialFlag" 
+                    [(ngModel)]="fullColorTwoSideSelectedValue" 
+                    [ngModelOptions]="{standalone: true}" 
+                    (selectionChange)="selectedFullColorTwoSideMaterial()"
+                    name="twoSidedMaterial">
+                        <mat-option *ngFor="let material of twoSidedMaterial" [value]="material.value"
+                            name="twoSidedMaterial">
+                            <span>{{ material.value }}</span>
+                        </mat-option>
                 </mat-select>
             </mat-form-field>
         </p>
@@ -152,3 +173,4 @@
             Request</button>
     </div>
 </form>
+
