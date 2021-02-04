@@ -12,7 +12,7 @@ import { Size } from '../models/size';
 })
 export class MainComponent implements OnInit {
   myForm: FormGroup;
-  @ViewChild("materialForm", {static: false}) materialForm : ElementRef;
+  @ViewChild("materialForm") materialForm : ElementRef;
   f: NgForm;
   // material selected value
   blankSelectedValue: string;
