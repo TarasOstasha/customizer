@@ -230,8 +230,9 @@ export class MainComponent implements OnInit {
     this.addressFlag = true;
     this.nextBtnFlag = true;
     this.sendRequestBtn = false;
+    //
   }
 
-  
+
 
 }
