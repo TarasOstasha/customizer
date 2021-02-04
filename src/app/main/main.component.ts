@@ -151,7 +151,7 @@ export class MainComponent implements OnInit {
     this.blankImg = true;
     this.colorImg = false;
   }
-  chooseFullColor(form: NgForm) {
+  chooseFullColor() {
     this.isDisabledMaterial = true;
     this.fullColor = true;
     this.materialFlag = false;
@@ -163,7 +163,7 @@ export class MainComponent implements OnInit {
     this.colorImg = true;
     this.blankImg = false;
     //this.materialForm.resetForm();
-    console.log(this.materialForm)
+    //console.log(this.materialForm)
     
   }
   chooseOneSided() {
