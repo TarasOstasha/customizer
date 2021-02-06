@@ -17,8 +17,18 @@ app.use((req, res, next) => {
         "Access-Control-Allow-Methods",
         "GET, POST, PATCH, PUT, DELETE, OPTIONS"
     );
+    res.setHeader(
+        "Access-Control-Allow-Headers", 
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
     next();
 });
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//     next();
+//   });
 
 app.get('/api/finish-type', (req, res, next) => {
     const finishType = [
@@ -94,6 +104,18 @@ app.get('/api/color-two-sided', (req, res) => {
         });
     } catch (error) {
         console.log(error);
+    }
+});
+
+app.post('/api/product-data', (req, res) => {
+    try {
+        const data = req.body;
+        res.status(200).json({
+            message: 'product data fetched successfully',
+            data: data
+        });
+    } catch (error) {
+        return res.status(400).json({ error: error.toString() });
     }
 });
 

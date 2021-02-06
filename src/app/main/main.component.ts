@@ -1,11 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // models
 import { Size } from '../models/size';
 import { Select } from '../models/select';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 
 @Component({
@@ -14,10 +18,6 @@ import { Select } from '../models/select';
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
-  //private order: Order[] = [];
-
-
-
 
   myForm: FormGroup;
   @ViewChild("materialForm") materialForm: ElementRef;
@@ -192,7 +192,7 @@ export class MainComponent implements OnInit {
 
 
 
-  sendData(form: NgForm) {
+  async sendData(form: NgForm) {
     if (this.secondFormGroup.controls.address.value == '' && this.secondFormGroup.controls.address.value == '') {
       alert('Please Fill Out The Form!');
       return
@@ -209,7 +209,10 @@ export class MainComponent implements OnInit {
       name: this.firstFormGroup.controls.userName.value,
       address: this.secondFormGroup.controls.address.value
     });
-    console.log(this.sizeData);
+    const postSendData = this._http.post(this.url + 'product-data', this.sizeData, httpOptions).toPromise();
+    const fromServer: any = await postSendData;
+    //console.log(this.sizeData);
+    console.log(fromServer, 'data from server')
     form.resetForm();
   }
 
