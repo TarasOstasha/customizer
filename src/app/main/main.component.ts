@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
+// models
 import { Size } from '../models/size';
+import { Select } from '../models/select';
 
 
 @Component({
@@ -11,8 +14,13 @@ import { Size } from '../models/size';
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
+  //private order: Order[] = [];
+
+
+
+
   myForm: FormGroup;
-  @ViewChild("materialForm") materialForm : ElementRef;
+  @ViewChild("materialForm") materialForm: ElementRef;
   f: NgForm;
   // material selected value
   blankSelectedValue: string;
@@ -56,51 +64,41 @@ export class MainComponent implements OnInit {
 
   sizeData: Size[] = [];
 
-  // for blank color selected
-  materials = [
-    { value: '10 oz Vinyl' },
-    { value: '13 oz Vinyl (Most Popular)' },
-    { value: '13 oz Smooth Vinyl' },
-    { value: '18 oz Opaque Vinyl' }
-  ]
-  // for fill color selected
-  oneSidedMaterial = [
-    { value: '9 oz Mesh Vinyl' },
-    { value: '10 oz Vinyl' },
-    { value: '13 oz Vinyl (Most Popular)' },
-    { value: '13 oz Smooth Vinyl' },
-    { value: '18 oz Vinyl' },
-    { value: 'Poly-Poplin Fabric' },
-    { value: 'Super Poly Knit Fabric' }
-  ]
-  twoSidedMaterial = [
-    { value: '13 oz Smooth Vinyl' },
-    { value: '18 oz Opaque Vinyl (Most Popular)' },
-    { value: 'Poly-Poplin Fabric' },
-    { value: 'Super Poly Knit Fabric' }
-  ]
+  finishType: Select[] = [];
+  materials: Select[] = [];
+  oneSidedMaterial: Select[] = [];
+  twoSidedMaterial: Select[] = [];
+  private url = 'http://localhost:3000/api/';
 
-  finishType = [
-    { value: 'Standard - Double Fold/Double Stitch & Grommets' },
-    { value: 'Standard - Double Fold/Double Stitch, Grommets & Rope' },
-    { value: 'Reinforced Corners - Double Fold/Double Stitch & Grommets' },
-    { value: 'Reinforced Corners - Double Fold/Double Stitch, Grommets & Rope' },
-    { value: 'Webbing - Double Fold/Double Stitch' },
-    { value: 'Webbing - Double Fold/Double Stitch & Grommets' },
-    { value: 'D-Ring with Webbing - Double Fold/Double Stitch D-Rings in corners' },
-    { value: 'D-Ring with Webbing - Double Fold/Double Stitch D-Rings in corners & Grommets' },
-    { value: 'Display Style - Double Fold/Single Stitch NO Grommets' },
-    { value: 'Display Style - Double Fold/Single Stitch with Grommets' },
-    { value: 'Pole Pockets - Single Fold/Single Stitch Pole Pocket Top/Btm No sewn sides' },
-    { value: 'Pole Pockets - Single Fold/Single Stitch Pole Pocket Top ONLY No sewn sides' },
-    { value: 'Pole Pockets - Double Fold/Top&Bottom Pole Pocket Sewn sides' },
-    { value: 'Pole Pockets - Double Fold/Single Stitch Pole Pocket Top ONLY Sewn sides' },
-    { value: 'Sewn Double-Folded/Double Stitched Pockets, no sewn sides' },
-    { value: 'Sewn Double-Folded/Double Stitched Pockets, sewn sides' },
-    { value: 'Please Select a Finishing Type' },
-  ]
+  async getFinishType() {
+    // this._http.get('http://localhost:3000/api/posts')
+    //   .subscribe((response: any)=> {
+    //     console.log(response.posts)
+    //   });
+    const data: any = await this._http.get(this.url + 'finish-type').toPromise();
+    this.finishType = await data.posts;
+    console.log(data)
+  }
+  async getBlankMaterial() {
+    const data: any = await this._http.get(this.url + 'blank-material').toPromise();
+    this.materials = await data.posts;
+    console.log(data);
+  }
+  async getFullColorOneSided() {
+    const data: any = await this._http.get(this.url + 'color-one-sided').toPromise();
+    this.oneSidedMaterial = await data.posts;
+    console.log(data);
+  }
+  async getFullColorTwoSided() {
+    const data: any = await this._http.get(this.url + 'color-two-sided').toPromise();
+    this.twoSidedMaterial = await data.posts;
+    console.log(data);
+  }
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _http: HttpClient
+  ) { }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -109,6 +107,8 @@ export class MainComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       address: ['', Validators.required]
     });
+
+    
   }
 
 
@@ -119,21 +119,24 @@ export class MainComponent implements OnInit {
   //   //this.materialFlag = true;
   //   this.enteredProdMaterial = val;
   // }
-  
+
   selectedBlankMaterial() {
     this.isDisabledDimensions = false;
     this.enteredBlankProdMaterial = this.blankSelectedValue;
-    console.log(this.enteredBlankProdMaterial)
+    console.log(this.enteredBlankProdMaterial);
+    this.getFinishType();    
   }
   selectedFullColorOneSideMaterial() {
     this.isDisabledDimensions = false;
     this.enteredFullColorOneSideMaterial = this.fullColorOneSideSelectedValue;
-    console.log(this.enteredFullColorOneSideMaterial)
+    console.log(this.enteredFullColorOneSideMaterial);
+    this.getFinishType();
   }
   selectedFullColorTwoSideMaterial() {
     this.isDisabledDimensions = false;
     this.enteredFullColorTwoSideMaterial = this.fullColorTwoSideSelectedValue;
-    console.log(this.enteredFullColorTwoSideMaterial)
+    console.log(this.enteredFullColorTwoSideMaterial);
+    this.getFinishType();
   }
 
   selectedType(val) {
@@ -150,6 +153,7 @@ export class MainComponent implements OnInit {
     // img
     this.blankImg = true;
     this.colorImg = false;
+    this.getBlankMaterial();
   }
   chooseFullColor() {
     this.isDisabledMaterial = true;
@@ -164,14 +168,14 @@ export class MainComponent implements OnInit {
     this.blankImg = false;
     //this.materialForm.resetForm();
     //console.log(this.materialForm)
-    
+
   }
   chooseOneSided() {
     this.isDisabledMaterial = false;
     this.blankColorFlag = false;
     this.oneSidedMaterialFlag = true;
     this.twoSidedMaterialFlag = false;
-
+    this.getFullColorOneSided();
   }
   chooseTwoSided() {
     this.blankColorFlag = false;
@@ -181,6 +185,7 @@ export class MainComponent implements OnInit {
     this.isDisabledDimensions = true;
     this.addressFlag = false;
     //this.isDisabledMaterial = true;
+    this.getFullColorTwoSided();
   }
 
 
