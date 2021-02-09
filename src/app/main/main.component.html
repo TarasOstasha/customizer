@@ -118,9 +118,12 @@
         <p>
             <mat-form-field appearance="fill">
                 <mat-label>Select a Finishing Type</mat-label>
-                <mat-select>
+                <mat-select 
+                    [(ngModel)]="enteredProdType" 
+                    (selectionChange)="selectedType()"
+                    [ngModelOptions]="{standalone: true}" name="type">
                     <mat-option *ngFor="let type of finishType" [value]="type.value">
-                        <span (click)="selectedType(type.value)">{{ type.value }}</span>
+                        <span>{{ type.value }}</span>
                     </mat-option>
                 </mat-select>
             </mat-form-field>

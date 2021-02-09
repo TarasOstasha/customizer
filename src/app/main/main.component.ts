@@ -111,8 +111,6 @@ export class MainComponent implements OnInit {
     
   }
 
-
-
   // selectedMaterial(val) {
   //   console.log('material- ', val)
   //   this.isDisabledDimensions = false;
@@ -139,8 +137,8 @@ export class MainComponent implements OnInit {
     this.getFinishType();
   }
 
-  selectedType(val) {
-    this.enteredProdType = val;
+  selectedType() {
+    //this.enteredProdType = val;
     this.nextBtnFlag = false;
   }
 
