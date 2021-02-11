@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const optionModel = require('../models/optionsModel');
+
 
 
 router.get('/finish-type', (req, res, next) => {
@@ -23,23 +25,39 @@ router.get('/finish-type', (req, res, next) => {
         { value: 'Sewn Double-Folded/Double Stitched Pockets, sewn sides' },
         { value: 'Please Select a Finishing Type' },
     ]
-    res.status(200).json({
+    res.status(201).json({
         message: 'finish type fetched successfully',
         posts: finishType
     });
 });
-router.get('/blank-material', (req, res) => {
+router.get('/blank-material', async (req, res) => {
     try {
-        const materials = [
-            { value: '10 oz Vinyl' },
-            { value: '13 oz Vinyl (Most Popular)' },
-            { value: '13 oz Smooth Vinyl' },
-            { value: '18 oz Opaque Vinyl' }
-        ];
+        // const materials = [
+        //     { value: '10 oz Vinyl' },
+        //     { value: '13 oz Vinyl (Most Popular)' },
+        //     { value: '13 oz Smooth Vinyl' },
+        //     { value: '18 oz Opaque Vinyl' }
+        // ];
+
+        // METHOD WITH ASYNC AWAIT \\
+        const data = await optionModel.find({});
+        console.log(data)
         res.status(200).json({
-            message: 'blank material fetched successfully',
-            posts: materials
+            message: 'blank material fetched successfully!!!',
+            posts: data
         });
+        // METHOD WITH PROMISE \\
+        // optionModel.find()
+        //     .then(documents => {
+        //         res.status(200).json({
+        //             message: 'blank material fetched successfully',
+        //             posts: documents
+        //         })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
+        // })
+
     } catch (error) {
         console.log(error);
     }
@@ -90,6 +108,21 @@ router.post('/product-data', (req, res) => {
     } catch (error) {
         return res.status(400).json({ error: error.toString() });
     }
+});
+
+router.post('/admin-data', (req, res) => {
+    const data = req.body;
+
+    const post = new optionModel({
+        prodColor: req.body.color,
+        prodMaterial: req.body.material,
+        prodType: req.body.type
+    });
+    post.save();
+    console.log(post);
+    res.status(201).json({
+        message: 'Post added successfully'
+    });
 });
 
 

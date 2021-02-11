@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // models
 import { Size } from '../models/size';
 import { Select } from '../models/select';
+import { Title } from '@angular/platform-browser';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -101,6 +102,7 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.firstFormGroup = this._formBuilder.group({
       userName: ['', Validators.required]
     });
@@ -109,6 +111,16 @@ export class MainComponent implements OnInit {
     });
 
     
+  }
+  imagePreview: any;
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    const reader = new FileReader();
+    console.log(reader)
+    reader.onload = () => {
+      this.imagePreview = reader.result
+    };
+    reader.readAsDataURL(file);
   }
 
   // selectedMaterial(val) {
