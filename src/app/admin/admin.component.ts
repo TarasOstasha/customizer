@@ -14,31 +14,55 @@ const httpOptions = {
 })
 export class AdminComponent implements OnInit {
   private url = 'http://localhost:3000/api/';
-  adminPanelForm: FormGroup;
+  adminPanelColorForm: FormGroup;
+  adminPanelMaterialForm: FormGroup;
+  adminPanelFinishTypeForm: FormGroup;
 
 
   constructor(private _http: HttpClient) { }
 
   ngOnInit(): void {
-    this.adminPanelForm = new FormGroup({
-      color: new FormControl(),
-      material: new FormControl(),
+    this.adminPanelColorForm = new FormGroup({
+      color: new FormControl()
+    });
+
+    this.adminPanelMaterialForm = new FormGroup({
+      material: new FormControl()
+    });
+
+    this.adminPanelFinishTypeForm = new FormGroup({
       type: new FormControl()
     });
   }
 
-  save() {
-    console.log(this.adminPanelForm);
-    console.log('Saved : ' + JSON.stringify(this.adminPanelForm.value));
-    console.log(this.adminPanelForm.get('color').touched);
-    this.adminPanelForm.markAllAsTouched(); // this fixed mat error issue (if you delete that the mat error tag will not be showing)
+  saveColor() {
+    //console.log('Saved : ' + JSON.stringify(this.adminPanelForm.value));
+    //console.log(this.adminPanelForm.get('color').touched);
+    this.adminPanelColorForm.markAllAsTouched(); // this fixed mat error issue (if you delete that the mat error tag will not be showing)
     const adminData = {
-      color: this.adminPanelForm.value.color,
-      material: this.adminPanelForm.value.material,
-      type: this.adminPanelForm.value.type
+      color: this.adminPanelColorForm.value.color,
     };
-    const postSendData = this._http.post(this.url + 'admin-data', JSON.stringify(adminData), httpOptions).toPromise();
-    this.adminPanelForm.reset();
+    const postSendData = this._http.post(this.url + 'admin-data/color-one-sided', JSON.stringify(adminData), httpOptions).toPromise();
+    this.adminPanelColorForm.reset();
   }
+  saveMaterial() {
+    const adminData = {
+      material: this.adminPanelMaterialForm.value.material,
+      type: this.adminPanelMaterialForm.value.type
+    };
+    const postSendData = this._http.post(this.url + 'admin-data/material', JSON.stringify(adminData), httpOptions).toPromise();
+    this.adminPanelColorForm.reset();
+  }
+
+  saveFinishType() {
+    const adminData = {
+      color: this.adminPanelColorForm.value.color,
+      material: this.adminPanelFinishTypeForm.value.material,
+      type: this.adminPanelFinishTypeForm.value.type
+    };
+    const postSendData = this._http.post(this.url + 'admin-data/type', JSON.stringify(adminData), httpOptions).toPromise();
+    this.adminPanelColorForm.reset();
+  }
+
 
 }

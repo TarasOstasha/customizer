@@ -1,4 +1,5 @@
-<form #postForm="ngForm">
+<form #postForm="ngForm" 
+    [formGroup]="clientForm" (ngSubmit)="sendData(postForm)">
     <!-- <mat-accordion> -->
     <!-- 1. Choose the Style -->
     <mat-expansion-panel [expanded]="step === 0">
@@ -34,45 +35,28 @@
             <mat-form-field appearance="fill" name="materialForm" #materialForm>
                 <mat-label>Select a Material Option</mat-label>
                 <!-- BLANK COLOR SELECTED -->
-                <!-- <mat-select *ngIf="blankColorFlag"> -->
-                    <!-- <mat-option *ngFor="let material of materials" [value]="material.value" name="material">
-                        <span (click)="selectedMaterial(material.value)">{{ material.value }}</span>
-                    </mat-option> -->
-                <!-- </mat-select> -->
-                <mat-select
-                    *ngIf="blankColorFlag" 
-                    [(ngModel)]="blankSelectedValue" 
-                    name="material" 
+                <mat-select *ngIf="blankColorFlag" formControlName="blankMaterialValue"
                     (selectionChange)="selectedBlankMaterial()">
-                        <mat-option *ngFor="let material of materials" [value]="material.value">
-                            {{ material.prodMaterial }} 
-                        </mat-option>
+                    <mat-option *ngFor="let material of materials" [value]="material.prodMaterial">
+                        {{ material.prodMaterial  }}                     
+                    </mat-option>
                 </mat-select>
                 <!-- FULL COLOR ONE SIDE SELECTED -->
                 <mat-label>Select a Material Option</mat-label>
-                <mat-select
-                    *ngIf="oneSidedMaterialFlag" 
-                    [(ngModel)]="fullColorOneSideSelectedValue" 
-                    [ngModelOptions]="{standalone: true}" 
-                    (selectionChange)="selectedFullColorOneSideMaterial()"
-                    name="oneSidedMaterial">
-                        <mat-option *ngFor="let material of oneSidedMaterial" [value]="material.value"
-                            name="oneSidedMaterial">
-                            <span>{{ material.value }}</span>
-                        </mat-option>
+                <mat-select *ngIf="oneSidedMaterialFlag" formControlName="fullColorOneSidedValue"
+                    (selectionChange)="selectedFullColorOneSideMaterial()">
+                    <mat-option *ngFor="let material of oneSidedMaterial" [value]="material.value">
+                        <span>{{ material.value }}</span>
+                    </mat-option>
                 </mat-select>
                 <!-- FULL COLOR TWO SIDE SELECTED -->
                 <mat-label>Select a Material Option</mat-label>
-                <mat-select 
-                    *ngIf="twoSidedMaterialFlag" 
-                    [(ngModel)]="fullColorTwoSideSelectedValue" 
-                    [ngModelOptions]="{standalone: true}" 
-                    (selectionChange)="selectedFullColorTwoSideMaterial()"
-                    name="twoSidedMaterial">
-                        <mat-option *ngFor="let material of twoSidedMaterial" [value]="material.value"
-                            name="twoSidedMaterial">
-                            <span>{{ material.value }}</span>
-                        </mat-option>
+                <mat-select *ngIf="twoSidedMaterialFlag" formControlName="fullColorTwoSidedValue"
+                    (selectionChange)="selectedFullColorTwoSideMaterial($event)">
+                    <mat-option *ngFor="let material of twoSidedMaterial" [value]="material.value"
+                        name="twoSidedMaterial">
+                        <span>{{ material.value }}</span>
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </p>
@@ -88,25 +72,29 @@
             <strong>Width: </strong>
             <mat-form-field class="example-form-field">
                 <mat-label>Ft</mat-label>
-                <input matInput type="text" [(ngModel)]="enteredWidthFt" name="widthFt">
+                <input matInput type="number" min="2" max="10" formControlName="enteredWidthFt" (change)="onChangeSize()">
+                <mat-error *ngIf="clientForm.get('enteredWidthFt').invalid">The maximum size is 10FT</mat-error>
             </mat-form-field>
             <mat-form-field class="example-form-field">
                 <mat-label>In</mat-label>
-                <input matInput type="text" [(ngModel)]="enteredWidthIn" name="widthIn">
+                <input matInput type="text" formControlName="enteredWidthIn">
             </mat-form-field>
         </p>
         <p>
             <strong>Height:</strong>
             <mat-form-field class="example-form-field">
                 <mat-label>Ft</mat-label>
-                <input matInput type="text" [(ngModel)]="enteredHeightFt" name="heightFt">
+                <input matInput type="number" formControlName="enteredHeightFt" (change)="onChangeSize()">
+                <mat-error *ngIf="clientForm.get('enteredHeightFt').invalid">The minimum size is 2FT</mat-error>
             </mat-form-field>
             <mat-form-field class="example-form-field">
                 <mat-label>In</mat-label>
-                <input matInput type="text" [(ngModel)]="enteredHeightIn" name="heightIn">
+                <input matInput type="text" formControlName="enteredHeightIn">
             </mat-form-field>
         </p>
-        <strong>Total (in Square Ft): </strong>{{ enteredWidthFt * enteredHeightFt }}
+        <strong >Price: {{ filteredObj.price }} $</strong><br>
+        <strong>Sq Fit: {{ filteredObj.width * filteredObj.height }}</strong>
+        <!-- <strong>Total (in Square Ft): </strong>{{ enteredWidthFt * enteredHeightFt }} -->
     </mat-expansion-panel>
     <!-- 4. Select A Finishing Type -->
     <mat-expansion-panel [disabled]="isDisabledDimensions" [expanded]="isDisabledDimensions == false">
@@ -118,10 +106,7 @@
         <p>
             <mat-form-field appearance="fill">
                 <mat-label>Select a Finishing Type</mat-label>
-                <mat-select 
-                    [(ngModel)]="enteredProdType" 
-                    (selectionChange)="selectedType()"
-                    [ngModelOptions]="{standalone: true}" name="type">
+                <mat-select formControlName="enteredProdType" (selectionChange)="selectedType()">
                     <mat-option *ngFor="let type of finishType" [value]="type.value">
                         <span>{{ type.value }}</span>
                     </mat-option>
@@ -134,32 +119,35 @@
         <button [disabled]="nextBtnFlag" mat-raised-button color="primary" (click)="goToNext()">Next</button>
     </div>
     <mat-horizontal-stepper linear #stepper *ngIf="addressFlag">
-        <mat-step [stepControl]="firstFormGroup">
-            <form [formGroup]="firstFormGroup">
-                <ng-template matStepLabel>Fill out your name</ng-template>
-                <mat-form-field>
-                    <mat-label>Name</mat-label>
-                    <input name="userName" matInput formControlName="userName" placeholder="Last name, First name"
-                        required>
-                </mat-form-field>
-                <div>
-                    <button mat-button matStepperNext>Next</button>
-                </div>
-            </form>
+        <mat-step>
+            <!-- <form [formGroup]="firstFormGroup"> -->
+            <ng-template matStepLabel>Fill out your name</ng-template>
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input name="userName" matInput formControlName="userName" placeholder="Last name, First name" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext (click)="cancelEvent($event)">Next</button>
+            </div>
+            <!-- </form> -->
         </mat-step>
-        <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
-                <ng-template matStepLabel>Fill out your address</ng-template>
-                <mat-form-field>
-                    <mat-label>Address</mat-label>
-                    <input name="address" matInput formControlName="address" placeholder="Ex. 1 Main St, New York, NY"
-                        required>
-                </mat-form-field>
-                <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button matStepperNext>Next</button>
-                </div>
-            </form>
+        <mat-step>
+            <!-- <form [formGroup]="secondFormGroup"> -->
+            <ng-template matStepLabel>Fill out your address</ng-template>
+            <mat-form-field>
+                <mat-label>Address</mat-label>
+                <input name="address" 
+                    matInput 
+                    (selectionChange)="addressOnChange($event.target)"
+                    formControlName="address" 
+                    placeholder="Ex. 1 Main St, New York, NY"
+                    required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious (click)="cancelEvent($event)">Back</button>
+                <button mat-button matStepperNext (click)="cancelEvent($event)">Next</button>
+            </div>
+            <!-- </form> -->
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Done</ng-template>
@@ -172,10 +160,14 @@
         </mat-step>
     </mat-horizontal-stepper>
     <div class="send">
-        <button [disabled]="sendRequestBtn" (click)="sendData(postForm)" mat-raised-button color="primary">Send
-            Request</button>
+        <button mat-raised-button color="primary" [disabled]="sendRequestBtn">Send</button>
     </div>
 </form>
+<br>Dirty: {{ clientForm.dirty }}
+<br>Touched: {{ clientForm.touched }}
+<br>Valid: {{ clientForm.valid }}
+<br>Value: {{ clientForm.value | json }}
+
 
 
 <!-- tests -->
@@ -184,11 +176,11 @@
     <input matInput type="text" formControlName="title1">
     <mat-error *ngIf="form.get('title').invalid"></mat-error>
     <input matInput type="text" formControlName="content2"> -->
-    <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
-    <input type="file" #filePicker (change)="onImagePicked($event)">
-    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview ">
-        <img [src]="imagePreview">
-    </div>
-    <!-- <button mat-raised-button color="primary" type="submit" (click)="sendImg()">send img</button>
+<button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+<input type="file" #filePicker (change)="onImagePicked($event)">
+<div class="image-preview" *ngIf="imagePreview !== '' && imagePreview ">
+    <img [src]="imagePreview">
+</div>
+<!-- <button mat-raised-button color="primary" type="submit" (click)="sendImg()">send img</button>
 </form> -->
 <a routerLink="/admin">go to admin panel</a>

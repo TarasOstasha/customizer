@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm, FormControl } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 // models
 import { Size } from '../models/size';
@@ -37,6 +38,7 @@ export class MainComponent implements OnInit {
   // form group
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  clientForm: FormGroup;
 
   // flags to change select state
   blankColorFlag: boolean = true;
@@ -54,14 +56,14 @@ export class MainComponent implements OnInit {
   nextBtnFlag: boolean = true;
   sendRequestBtn: boolean = true;
 
-  enteredWidthFt: number;
-  enteredWidthIn: number;
-  enteredHeightFt: number;
-  enteredHeightIn: number;
-  enteredBlankProdMaterial: string;
-  enteredFullColorOneSideMaterial: string;
-  enteredFullColorTwoSideMaterial: string;
-  enteredProdType: string;
+  //enteredWidthFt: number;
+  // enteredWidthIn: number;
+  // enteredHeightFt: number;
+  // enteredHeightIn: number;
+  // enteredBlankProdMaterial: string;
+  // enteredFullColorOneSideMaterial: string;
+  // enteredFullColorTwoSideMaterial: string;
+  // enteredProdType: string;
 
   sizeData: Size[] = [];
 
@@ -102,15 +104,22 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.firstFormGroup = this._formBuilder.group({
-      userName: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
+    this.clientForm = this._formBuilder.group({
+      blankMaterialValue: ['', Validators.required],
+      fullColorOneSidedValue: ['', Validators.required],
+      fullColorTwoSidedValue: ['', Validators.required],
+      enteredWidthFt: [ 0, [Validators.required, Validators.max(10), Validators.min(2)] ],
+      enteredWidthIn: [0],
+      enteredHeightFt: [ 0, [Validators.required, Validators.max(10), Validators.min(2)] ],
+      enteredHeightIn: [0],
+      enteredProdType: ['', Validators.required],
+      userName: ['', Validators.required],
       address: ['', Validators.required]
     });
 
-    
+    // this.clientForm.valueChanges.subscribe(val => {
+    //   console.log(val);
+    // });    
   }
   imagePreview: any;
   onImagePicked(event: Event) {
@@ -130,23 +139,27 @@ export class MainComponent implements OnInit {
   //   this.enteredProdMaterial = val;
   // }
 
-  selectedBlankMaterial() {
+  async selectedBlankMaterial() {
     this.isDisabledDimensions = false;
-    this.enteredBlankProdMaterial = this.blankSelectedValue;
-    console.log(this.enteredBlankProdMaterial);
-    this.getFinishType();    
+    //this.enteredBlankProdMaterial = this.blankSelectedValue;
+    //console.log(this.enteredBlankProdMaterial);
+    // this.clientForm.valueChanges.subscribe(val => {
+    //   console.log(val);
+    // }); 
+    this.getFinishType();
   }
   selectedFullColorOneSideMaterial() {
     this.isDisabledDimensions = false;
-    this.enteredFullColorOneSideMaterial = this.fullColorOneSideSelectedValue;
-    console.log(this.enteredFullColorOneSideMaterial);
+    //this.enteredFullColorOneSideMaterial = this.fullColorOneSideSelectedValue;
+    //console.log(this.enteredFullColorOneSideMaterial);
     this.getFinishType();
   }
-  selectedFullColorTwoSideMaterial() {
+  selectedFullColorTwoSideMaterial(event) {
     this.isDisabledDimensions = false;
-    this.enteredFullColorTwoSideMaterial = this.fullColorTwoSideSelectedValue;
-    console.log(this.enteredFullColorTwoSideMaterial);
+    //this.enteredFullColorTwoSideMaterial = this.fullColorTwoSideSelectedValue;
+    //console.log(this.enteredFullColorTwoSideMaterial);
     this.getFinishType();
+    console.log('event')
   }
 
   selectedType() {
@@ -202,28 +215,28 @@ export class MainComponent implements OnInit {
 
 
 
-  async sendData(form: NgForm) {
-    if (this.secondFormGroup.controls.address.value == '' && this.secondFormGroup.controls.address.value == '') {
-      alert('Please Fill Out The Form!');
-      return
-    }
+  // async sendData(form: NgForm) {
+  async sendData(form) {
+
     this.sizeData.push({
-      widthFt: this.enteredWidthFt,
-      widthIn: this.enteredWidthIn,
-      heightFt: this.enteredHeightFt,
-      heightIn: this.enteredHeightIn,
-      blankProdMaterial: this.enteredBlankProdMaterial,
-      fullColorOneSideMaterial: this.enteredFullColorOneSideMaterial,
-      fullColorTwoSideMaterial: this.fullColorTwoSideSelectedValue,
-      prodType: this.enteredProdType,
-      name: this.firstFormGroup.controls.userName.value,
-      address: this.secondFormGroup.controls.address.value
+      widthFt: this.clientForm.value.enteredWidthFt,
+      widthIn: this.clientForm.value.enteredWidthIn,
+      heightFt: this.clientForm.value.enteredHeightFt,
+      heightIn: this.clientForm.value.enteredHeightIn,
+      blankProdMaterial: this.clientForm.value.blankMaterialValue,
+      fullColorOneSideMaterial: this.clientForm.value.fullColorOneSidedValue,
+      fullColorTwoSideMaterial: this.clientForm.value.fullColorTwoSidedValue,
+      prodType: this.clientForm.value.enteredProdType,
+      name: this.clientForm.value.userName.value,
+      address: this.clientForm.value.address.value // the same method
     });
+    console.log(this.sizeData)
     const postSendData = this._http.post(this.url + 'product-data', this.sizeData, httpOptions).toPromise();
     const fromServer: any = await postSendData;
     //console.log(this.sizeData);
-    console.log(fromServer, 'data from server')
+    console.log(fromServer, 'data from server');
     form.resetForm();
+    //form.resetForm();
   }
 
   // sendAddress(form: NgForm) {
@@ -251,6 +264,41 @@ export class MainComponent implements OnInit {
     //
   }
 
+  addressOnChange(event) {
+    console.log(event)
+    //const sendDataFlag = this.clientForm.get('address').touched
 
+  }
+
+
+
+
+////// dynamically get data from back end
+  filteredObj = { width: 0, height: 0, price: 0 };
+  onChangeSize() {
+    try {
+      this.clientForm.valueChanges.pipe(debounceTime(300)).subscribe(async (val) => {
+        //console.log(val.enteredWidthFt, val.enteredHeightFt);
+        if( val.enteredWidthFt && val.enteredHeightFt > 10 || val.enteredWidthFt && val.enteredHeightFt < 2 ) {
+          return
+        }
+        let getData: any = await this._http.get(this.url + 'product-dimensions').toPromise();
+        const result = getData.find(function (e) {
+          let filtered = e.width == val.enteredWidthFt && e.height == val.enteredHeightFt;
+          return filtered;
+        });
+        this.filteredObj = Object.assign(result);  // made copy of result obj
+        console.log(this.filteredObj)
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
+  // stop submitting form for appropriate buttons
+  cancelEvent(event) {
+    event.preventDefault();
+  }
 
 }

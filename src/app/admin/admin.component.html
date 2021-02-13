@@ -1,26 +1,47 @@
 <form 
-    [formGroup]="adminPanelForm" 
-    (ngSubmit)="save()">
+    [formGroup]="adminPanelColorForm" 
+    (ngSubmit)="saveColor()">
     <mat-form-field appearance="fill" class="admin-panel-wrapper">
         <mat-label>Add Color Value</mat-label>
         <input class="admin-panel" matInput formControlName="color" minlength="3" required>
-        <mat-error *ngIf="adminPanelForm.errors?.required || adminPanelForm.get('color').dirty">Please Enter Color</mat-error>
+        <mat-error *ngIf="adminPanelColorForm.errors?.required || adminPanelColorForm.get('color').dirty">Please Enter Color</mat-error>
     </mat-form-field>
-
+    <button mat-raised-button color="primary" [disabled]="!adminPanelColorForm.valid">Add</button>
+</form>
+<form
+    [formGroup]="adminPanelMaterialForm"
+    (ngSubmit)="saveMaterial()">
     <mat-form-field appearance="fill" class="admin-panel-wrapper">
         <mat-label>Add Material</mat-label>
         <input class="admin-panel" matInput formControlName="material" minlength="3" required>
-        <mat-error *ngIf="adminPanelForm.errors?.required || adminPanelForm.get('color').dirty">Please Enter Material</mat-error>  
+        <mat-error *ngIf="adminPanelMaterialForm.errors?.required || adminPanelMaterialForm.get('material').dirty">Please Enter Material</mat-error>  
     </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!adminPanelMaterialForm.valid">Add</button>
+</form>
+<form
+    [formGroup]="adminPanelFinishTypeForm"
+    (ngSubmit)="saveFinishType()">
     <mat-form-field appearance="fill" class="admin-panel-wrapper">
         <mat-label>Add Finish Type</mat-label>
         <input class="admin-panel" matInput formControlName="type" minlength="3" required>
-        <mat-error *ngIf="adminPanelForm.errors?.required || adminPanelForm.get('color').dirty">Please Enter Type</mat-error>  
+        <mat-error *ngIf="adminPanelFinishTypeForm.errors?.required || adminPanelFinishTypeForm.get('type').dirty">Please Enter Type</mat-error>  
     </mat-form-field>
-
-    <button mat-raised-button color="primary" [disabled]="!adminPanelForm.valid">Send</button>
+    <button mat-raised-button color="primary" [disabled]="!adminPanelFinishTypeForm.valid">Add</button>
 </form>
-<br>Dirty: {{ adminPanelForm.dirty }}
-<br>Touched: {{ adminPanelForm.touched }}
-<br>Valid: {{ adminPanelForm.valid }}
-<br>Value: {{ adminPanelForm.value | json }}
+<h3>adminPanelColorForm</h3>
+<br>Dirty: {{ adminPanelColorForm.dirty }}
+<br>Touched: {{ adminPanelColorForm.touched }}
+<br>Valid: {{ adminPanelColorForm.valid }}
+<br>Value: {{ adminPanelColorForm.value | json }}
+
+<h3>adminPanelMaterialForm</h3>
+<br>Dirty: {{ adminPanelMaterialForm.dirty }}
+<br>Touched: {{ adminPanelMaterialForm.touched }}
+<br>Valid: {{ adminPanelMaterialForm.valid }}
+<br>Value: {{ adminPanelMaterialForm.value | json }}
+
+<h3>adminPanelFinishTypeForm</h3>
+<br>Dirty: {{ adminPanelFinishTypeForm.dirty }}
+<br>Touched: {{ adminPanelFinishTypeForm.touched }}
+<br>Valid: {{ adminPanelFinishTypeForm.valid }}
+<br>Value: {{ adminPanelFinishTypeForm.value | json }}

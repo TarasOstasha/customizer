@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const optionModel = require('../models/optionsModel');
-
+const colorModel = require('../models/colorModel');
+const materialModel = require('../models/materialModel');
+const typeModel = require('../models/typeModel');
+const dimensionsModel = require('../models/dimensionsModel');
 
 
 router.get('/finish-type', (req, res, next) => {
@@ -40,7 +42,7 @@ router.get('/blank-material', async (req, res) => {
         // ];
 
         // METHOD WITH ASYNC AWAIT \\
-        const data = await optionModel.find({});
+        const data = await materialModel.find({});
         console.log(data)
         res.status(200).json({
             message: 'blank material fetched successfully!!!',
@@ -110,18 +112,138 @@ router.post('/product-data', (req, res) => {
     }
 });
 
-router.post('/admin-data', (req, res) => {
-    const data = req.body;
+router.get('/product-dimensions', (req, res) => {
+    const dimensionsData = [
+        { width: 2, height: 2, price: 10 },
+        { width: 2, height: 3, price: 20 },
+        { width: 2, height: 4, price: 30 },
+        { width: 2, height: 5, price: 40 },
+        { width: 2, height: 6, price: 50 },
+        { width: 2, height: 7, price: 60 },
+        { width: 2, height: 8, price: 70 },
+        { width: 2, height: 9, price: 80 },
+        { width: 2, height: 10, price: 90 },
 
-    const post = new optionModel({
+        { width: 3, height: 2, price: 10 },
+        { width: 3, height: 3, price: 20 },
+        { width: 3, height: 4, price: 30 },
+        { width: 3, height: 5, price: 40 },
+        { width: 3, height: 6, price: 50 },
+        { width: 3, height: 7, price: 60 },
+        { width: 3, height: 8, price: 70 },
+        { width: 3, height: 9, price: 80 },
+        { width: 3, height: 10, price: 90 },
+
+        { width: 4, height: 2, price: 10 },
+        { width: 4, height: 3, price: 20 },
+        { width: 4, height: 4, price: 30 },
+        { width: 4, height: 5, price: 40 },
+        { width: 4, height: 6, price: 50 },
+        { width: 4, height: 7, price: 60 },
+        { width: 4, height: 8, price: 70 },
+        { width: 4, height: 9, price: 80 },
+        { width: 4, height: 10, price: 90 },
+
+        { width: 5, height: 2, price: 10 },
+        { width: 5, height: 3, price: 20 },
+        { width: 5, height: 4, price: 30 },
+        { width: 5, height: 5, price: 40 },
+        { width: 5, height: 6, price: 50 },
+        { width: 5, height: 7, price: 60 },
+        { width: 5, height: 8, price: 70 },
+        { width: 5, height: 9, price: 80 },
+        { width: 5, height: 10, price: 90 },
+
+        { width: 6, height: 2, price: 10 },
+        { width: 6, height: 3, price: 20 },
+        { width: 6, height: 4, price: 30 },
+        { width: 6, height: 5, price: 40 },
+        { width: 6, height: 6, price: 50 },
+        { width: 6, height: 7, price: 60 },
+        { width: 6, height: 8, price: 70 },
+        { width: 6, height: 9, price: 80 },
+        { width: 6, height: 10, price: 90 },
+
+        { width: 7, height: 2, price: 10 },
+        { width: 7, height: 3, price: 20 },
+        { width: 7, height: 4, price: 30 },
+        { width: 7, height: 5, price: 40 },
+        { width: 7, height: 6, price: 50 },
+        { width: 7, height: 7, price: 60 },
+        { width: 7, height: 8, price: 70 },
+        { width: 7, height: 9, price: 80 },
+        { width: 7, height: 10, price: 90 },
+
+        { width: 8, height: 2, price: 10 },
+        { width: 8, height: 3, price: 20 },
+        { width: 8, height: 4, price: 30 },
+        { width: 8, height: 5, price: 40 },
+        { width: 8, height: 6, price: 50 },
+        { width: 8, height: 7, price: 60 },
+        { width: 8, height: 8, price: 70 },
+        { width: 8, height: 9, price: 80 },
+        { width: 8, height: 10, price: 90 },
+
+        { width: 9, height: 2, price: 10 },
+        { width: 9, height: 3, price: 20 },
+        { width: 9, height: 4, price: 30 },
+        { width: 9, height: 5, price: 40 },
+        { width: 9, height: 6, price: 50 },
+        { width: 9, height: 7, price: 60 },
+        { width: 9, height: 8, price: 70 },
+        { width: 9, height: 9, price: 80 },
+        { width: 9, height: 10, price: 90 },
+
+        { width: 10, height: 2, price: 10 },
+        { width: 10, height: 3, price: 20 },
+        { width: 10, height: 4, price: 30 },
+        { width: 10, height: 5, price: 40 },
+        { width: 10, height: 6, price: 50 },
+        { width: 10, height: 7, price: 60 },
+        { width: 10, height: 8, price: 70 },
+        { width: 10, height: 9, price: 80 },
+        { width: 10, height: 10, price: 90 },
+    ];
+    //const post = new dimensionsModel(
+       // prodDim: dimensionsData
+    //)
+    res.status(201).json(
+        //message: 'Dimensions get successfully',
+        dimensionsData
+    )
+});
+
+router.post('/admin-data/color-one-sided', (req, res) => {
+    const data = req.body;
+    const post = new colorModel({
         prodColor: req.body.color,
-        prodMaterial: req.body.material,
+    });
+    post.save();
+    console.log(post);
+    res.status(201).json({
+        message: 'Color added successfully'
+    });
+});
+
+router.post('/admin-data/material', (req, res) => {
+    const post = new materialModel({
+        prodMaterial: req.body.material
+    });
+    post.save();
+    console.log(post);
+    res.status(201).json({
+        message: 'Material added successfully'
+    });
+});
+
+router.post('/admin-data/type', (req, res) => {
+    const post = new typeModel({
         prodType: req.body.type
     });
     post.save();
     console.log(post);
     res.status(201).json({
-        message: 'Post added successfully'
+        message: 'Finishing Type added successfully'
     });
 });
 
