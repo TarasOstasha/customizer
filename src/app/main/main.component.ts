@@ -117,6 +117,7 @@ export class MainComponent implements OnInit {
       address: ['', Validators.required]
     });
 
+    // on this method you can subscribe and listen all changes in live
     // this.clientForm.valueChanges.subscribe(val => {
     //   console.log(val);
     // });    
@@ -228,26 +229,18 @@ export class MainComponent implements OnInit {
       fullColorTwoSideMaterial: this.clientForm.value.fullColorTwoSidedValue,
       prodType: this.clientForm.value.enteredProdType,
       name: this.clientForm.value.userName.value,
-      address: this.clientForm.value.address.value // the same method
+      address: this.clientForm.value.address.value,
+      price: this.filteredObj.price
     });
     console.log(this.sizeData)
     const postSendData = this._http.post(this.url + 'product-data', this.sizeData, httpOptions).toPromise();
     const fromServer: any = await postSendData;
     //console.log(this.sizeData);
-    console.log(fromServer, 'data from server');
+    //console.log(fromServer, 'data from server');
     form.resetForm();
-    //form.resetForm();
+    this.sendRequestBtn = true;
   }
 
-  // sendAddress(form: NgForm) {
-  //   if(form.invalid) {
-  //     return
-  //   }
-  //   console.log(form.value.name)
-
-  //   form.resetForm();
-
-  // }
   sendAddress() {
     const userData = {
       name: this.firstFormGroup.controls.userName.value,
@@ -283,11 +276,14 @@ export class MainComponent implements OnInit {
           return
         }
         let getData: any = await this._http.get(this.url + 'product-dimensions').toPromise();
-        const result = getData.find(function (e) {
+        let result = getData.find(function (e) {
           let filtered = e.width == val.enteredWidthFt && e.height == val.enteredHeightFt;
           return filtered;
         });
         this.filteredObj = Object.assign(result);  // made copy of result obj
+        if(this.filteredObj == undefined || this.filteredObj == null) {
+          return console.log('Cannot convert undefined or null to object')
+        }
         console.log(this.filteredObj)
       });
     } catch (error) {

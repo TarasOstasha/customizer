@@ -9,4 +9,5 @@ export interface Size {
     prodType: string;
     name: string;
     address: string;
+    price: number
 }
