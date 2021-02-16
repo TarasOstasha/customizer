@@ -28,6 +28,48 @@
     </mat-form-field>
     <button mat-raised-button color="primary" [disabled]="!adminPanelFinishTypeForm.valid">Add</button>
 </form>
+<h3>add sizes</h3>
+<form
+    [formGroup]="adminPanelDisplays"
+    (ngSubmit)="saveDisplays()">
+    <mat-form-field appearance="fill" class="admin-panel-wrapper">
+        <mat-label>Add Width</mat-label>
+        <input class="admin-panel" matInput formControlName="width" minlength="1" required>
+        <mat-error *ngIf="adminPanelDisplays.errors?.required || adminPanelDisplays.get('width').dirty">Please Enter Width of Product</mat-error>  
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="admin-panel-wrapper">
+            <mat-label>Add Height</mat-label>
+            <input class="admin-panel" matInput formControlName="height" minlength="1" required>
+            <mat-error *ngIf="adminPanelDisplays.errors?.required || adminPanelDisplays.get('height').dirty">Please Enter Height of Product</mat-error>  
+        </mat-form-field>
+            <mat-form-field appearance="fill" class="admin-panel-wrapper">
+        <mat-label>Add Price</mat-label>
+        <input class="admin-panel" matInput formControlName="price" minlength="1" required>
+        <mat-error *ngIf="adminPanelDisplays.errors?.required || adminPanelDisplays.get('price').dirty">Please Enter thePrice of Product</mat-error>  
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!adminPanelDisplays.valid">Add</button>
+</form>
+<!-- <form
+    [formGroup]="adminPanelDisplaySizeHeight"
+    (ngSubmit)="saveDisplaySize()">
+    <mat-form-field appearance="fill" class="admin-panel-wrapper">
+        <mat-label>Add Width</mat-label>
+        <input class="admin-panel" matInput formControlName="height" minlength="1" required>
+        <mat-error *ngIf="adminPanelDisplaySizeHeight.errors?.required || adminPanelDisplaySizeHeight.get('height').dirty">Please Enter Height of Product</mat-error>  
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!adminPanelDisplaySizeHeight.valid">Add</button>
+</form> -->
+<!-- <form
+    [formGroup]="adminPanelDisplayPrice"
+    (ngSubmit)="saveDisplaySize()">
+    <mat-form-field appearance="fill" class="admin-panel-wrapper">
+        <mat-label>Add Width</mat-label>
+        <input class="admin-panel" matInput formControlName="price" minlength="1" required>
+        <mat-error *ngIf="adminPanelDisplayPrice.errors?.required || adminPanelDisplayPrice.get('price').dirty">Please Enter thePrice of Product</mat-error>  
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!adminPanelDisplayPrice.valid">Add</button>
+</form> -->
+
 <h3>adminPanelColorForm</h3>
 <br>Dirty: {{ adminPanelColorForm.dirty }}
 <br>Touched: {{ adminPanelColorForm.touched }}

@@ -94,7 +94,6 @@
         </p>
         <strong >Price: {{ filteredObj.price }} $</strong><br>
         <strong>Sq Fit: {{ filteredObj.width * filteredObj.height }}</strong>
-        <!-- <strong>Total (in Square Ft): </strong>{{ enteredWidthFt * enteredHeightFt }} -->
     </mat-expansion-panel>
     <!-- 4. Select A Finishing Type -->
     <mat-expansion-panel [disabled]="isDisabledDimensions" [expanded]="isDisabledDimensions == false">
@@ -124,7 +123,7 @@
             <ng-template matStepLabel>Fill out your name</ng-template>
             <mat-form-field>
                 <mat-label>Name</mat-label>
-                <input name="userName" matInput formControlName="userName" placeholder="Last name, First name" required>
+                <input matInput formControlName="userName" placeholder="Last name, First name" required>
             </mat-form-field>
             <div>
                 <button mat-button matStepperNext (click)="cancelEvent($event)">Next</button>
@@ -160,7 +159,7 @@
         </mat-step>
     </mat-horizontal-stepper>
     <div class="send">
-        <button mat-raised-button color="primary" [disabled]="sendRequestBtn">Send</button>
+        <button mat-raised-button color="primary" [disabled]="!clientForm.valid">Send</button>
     </div>
 </form>
 <br>Dirty: {{ clientForm.dirty }}

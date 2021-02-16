@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 const dimensionsSchema = mongoose.Schema({
-    prodDimensions: { type: String, require: true  }
+    width: Number,
+    height: Number,
+    price: Number
 });
 
 

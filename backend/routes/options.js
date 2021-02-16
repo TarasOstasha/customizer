@@ -112,7 +112,10 @@ router.post('/product-data', (req, res) => {
     }
 });
 
-router.get('/product-dimensions', (req, res) => {
+router.post('/admin-data/product-dimensions', async(req, res) => {
+    //console.log(req.body.width, '-width', req.body.height, '-height');
+    
+    //console.log(data)
     const dimensionsData = [
         { width: 2, height: 2, price: 10 },
         { width: 2, height: 3, price: 20 },
@@ -204,13 +207,25 @@ router.get('/product-dimensions', (req, res) => {
         { width: 10, height: 9, price: 80 },
         { width: 10, height: 10, price: 90 },
     ];
-    //const post = new dimensionsModel(
-       // prodDim: dimensionsData
-    //)
-    res.status(201).json(
-        //message: 'Dimensions get successfully',
-        dimensionsData
-    )
+  
+    const post = new dimensionsModel({
+        width: req.body.width,
+        height: req.body.width,
+        price: req.body.price
+    })
+    post.save();
+    res.status(201).json({
+        message: 'Dimensions fetched successfully',
+        data: post 
+    })
+});
+
+router.get('/admin-data/get-product-dimensions', async(req, res) => {
+    const data = await dimensionsModel.find({});
+    res.status(201).json({
+        message: 'Size data from DB fetched successfully',
+        data: data
+    })
 });
 
 router.post('/admin-data/color-one-sided', (req, res) => {

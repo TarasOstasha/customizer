@@ -21,9 +21,6 @@ const httpOptions = {
 })
 export class MainComponent implements OnInit {
 
-  myForm: FormGroup;
-  @ViewChild("materialForm") materialForm: ElementRef;
-  f: NgForm;
   // material selected value
   blankSelectedValue: string;
   fullColorOneSideSelectedValue: string;
@@ -54,7 +51,7 @@ export class MainComponent implements OnInit {
 
   addressFlag: boolean;
   nextBtnFlag: boolean = true;
-  sendRequestBtn: boolean = true;
+  //sendRequestBtn: boolean = true;
 
   //enteredWidthFt: number;
   // enteredWidthIn: number;
@@ -98,6 +95,48 @@ export class MainComponent implements OnInit {
     console.log(data);
   }
 
+  ////// dynamically get data from back end
+  filteredObj = { width: 0, height: 0, price: 0 };
+  
+  onChangeSize() {
+    try {
+      this.clientForm.valueChanges.pipe(debounceTime(300)).subscribe(async (val) => {
+        //console.log(val.enteredWidthFt, val.enteredHeightFt);
+        if( val.enteredWidthFt && val.enteredHeightFt > 10 || val.enteredWidthFt && val.enteredHeightFt < 2 ) {
+          return
+        }
+        const width = val.enteredWidthFt;
+        const height = val.enteredHeightFt;
+        //let postData: any = await this._http.post(this.url + 'admin-data/product-dimensions', { width, height }, httpOptions).toPromise();
+        //console.log(postData)
+        let getPostData: any = await this._http.get(this.url + 'admin-data/get-product-dimensions').toPromise();
+        const dimensionsValue = getPostData.data.find(item => {
+          return item.width == width && item.height == height;
+        })
+        this.filteredObj = Object.assign(dimensionsValue);
+        //console.log(this.dimensionsValue.width)
+        //let getData: any = await this._http.get(this.url + 'product-dimensions').toPromise();
+        //this.test = await getData
+        //console.log(this.test)
+        // let result = getData.data.find(function (e) {
+        //   return e.width == val.enteredWidthFt && e.height == val.enteredHeightFt;
+        // });
+        // this.filteredObj = Object.assign(result);  // made copy of result obj
+        // if(this.filteredObj == undefined || this.filteredObj == null) {
+        //   return console.log('Cannot convert undefined or null to object');
+        // }
+        //console.log(this.filteredObj)
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+  // stop submitting form for appropriate buttons
+  cancelEvent(event) {
+    event.preventDefault();
+  }
+
   constructor(
     private _formBuilder: FormBuilder,
     private _http: HttpClient
@@ -106,8 +145,8 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.clientForm = this._formBuilder.group({
       blankMaterialValue: ['', Validators.required],
-      fullColorOneSidedValue: ['', Validators.required],
-      fullColorTwoSidedValue: ['', Validators.required],
+      fullColorOneSidedValue: [''],
+      fullColorTwoSidedValue: [''],
       enteredWidthFt: [ 0, [Validators.required, Validators.max(10), Validators.min(2)] ],
       enteredWidthIn: [0],
       enteredHeightFt: [ 0, [Validators.required, Validators.max(10), Validators.min(2)] ],
@@ -238,7 +277,7 @@ export class MainComponent implements OnInit {
     //console.log(this.sizeData);
     //console.log(fromServer, 'data from server');
     form.resetForm();
-    this.sendRequestBtn = true;
+    this.filteredObj = { width: 0, height: 0, price: 0 };
   }
 
   sendAddress() {
@@ -253,7 +292,7 @@ export class MainComponent implements OnInit {
   goToNext() {
     this.addressFlag = true;
     this.nextBtnFlag = true;
-    this.sendRequestBtn = false;
+   // this.sendRequestBtn = false;
     //
   }
 
@@ -266,35 +305,6 @@ export class MainComponent implements OnInit {
 
 
 
-////// dynamically get data from back end
-  filteredObj = { width: 0, height: 0, price: 0 };
-  onChangeSize() {
-    try {
-      this.clientForm.valueChanges.pipe(debounceTime(300)).subscribe(async (val) => {
-        //console.log(val.enteredWidthFt, val.enteredHeightFt);
-        if( val.enteredWidthFt && val.enteredHeightFt > 10 || val.enteredWidthFt && val.enteredHeightFt < 2 ) {
-          return
-        }
-        let getData: any = await this._http.get(this.url + 'product-dimensions').toPromise();
-        let result = getData.find(function (e) {
-          let filtered = e.width == val.enteredWidthFt && e.height == val.enteredHeightFt;
-          return filtered;
-        });
-        this.filteredObj = Object.assign(result);  // made copy of result obj
-        if(this.filteredObj == undefined || this.filteredObj == null) {
-          return console.log('Cannot convert undefined or null to object')
-        }
-        console.log(this.filteredObj)
-      });
-    } catch (error) {
-      console.error(error);
-    }
 
-  }
-
-  // stop submitting form for appropriate buttons
-  cancelEvent(event) {
-    event.preventDefault();
-  }
 
 }

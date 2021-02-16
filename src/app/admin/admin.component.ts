@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit {
   adminPanelColorForm: FormGroup;
   adminPanelMaterialForm: FormGroup;
   adminPanelFinishTypeForm: FormGroup;
+  adminPanelDisplays: FormGroup;
 
 
   constructor(private _http: HttpClient) { }
@@ -32,6 +33,12 @@ export class AdminComponent implements OnInit {
 
     this.adminPanelFinishTypeForm = new FormGroup({
       type: new FormControl()
+    });
+
+    this.adminPanelDisplays = new FormGroup({
+      width: new FormControl(),
+      height: new FormControl(),
+      price: new FormControl
     });
   }
 
@@ -62,6 +69,17 @@ export class AdminComponent implements OnInit {
     };
     const postSendData = this._http.post(this.url + 'admin-data/type', JSON.stringify(adminData), httpOptions).toPromise();
     this.adminPanelColorForm.reset();
+  }
+
+  saveDisplays() {
+    const adminData = {
+      width: this.adminPanelDisplays.value.width,
+      height: this.adminPanelDisplays.value.height,
+      price: this.adminPanelDisplays.value.price
+    };
+    const postSendData = this._http.post(this.url + 'admin-data/product-dimensions', JSON.stringify(adminData), httpOptions).toPromise();
+    console.log(adminData)
+    //this.adminPanelDisplays.reset();
   }
 
 
