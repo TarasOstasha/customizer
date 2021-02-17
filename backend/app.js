@@ -29,11 +29,8 @@ app.use('/', express.static('../dist'));
 //app.use(express.static(path.join(__dirname, 'dist')));
 // For static files
 app.use(express.static('../dist'))
-// For virtual routes use 
-app.use('*', (req, res) => 
-{
-  res.sendFile(__dirname +'/dist/index.html');
- });
+ 
+
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

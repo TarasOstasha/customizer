@@ -112,9 +112,9 @@ router.post('/product-data', (req, res) => {
     }
 });
 
-router.post('/admin-data/product-dimensions', async(req, res) => {
+router.post('/admin-data/product-dimensions', async (req, res) => {
     //console.log(req.body.width, '-width', req.body.height, '-height');
-    
+
     //console.log(data)
     const dimensionsData = [
         { width: 2, height: 2, price: 10 },
@@ -207,7 +207,7 @@ router.post('/admin-data/product-dimensions', async(req, res) => {
         { width: 10, height: 9, price: 80 },
         { width: 10, height: 10, price: 90 },
     ];
-  
+
     const post = new dimensionsModel({
         width: req.body.width,
         height: req.body.width,
@@ -216,11 +216,11 @@ router.post('/admin-data/product-dimensions', async(req, res) => {
     post.save();
     res.status(201).json({
         message: 'Dimensions fetched successfully',
-        data: post 
+        data: post
     })
 });
 
-router.get('/admin-data/get-product-dimensions', async(req, res) => {
+router.get('/admin-data/get-product-dimensions', async (req, res) => {
     const data = await dimensionsModel.find({});
     res.status(201).json({
         message: 'Size data from DB fetched successfully',
@@ -260,6 +260,14 @@ router.post('/admin-data/type', (req, res) => {
     res.status(201).json({
         message: 'Finishing Type added successfully'
     });
+});
+
+//redirect all get request to index.html. Must be the last!!!!!!!!!!!!!!!
+router.get('/*', async (req, res, next) => {
+    console.log('726', req.user, new Date())
+    const html = await pfs.readFile('dist/index.html');
+    res.end(html);
+    // res.redirect('/index.html');
 });
 
 
