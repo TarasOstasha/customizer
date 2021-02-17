@@ -6,6 +6,9 @@ const materialModel = require('../models/materialModel');
 const typeModel = require('../models/typeModel');
 const dimensionsModel = require('../models/dimensionsModel');
 
+const fs = require('fs');
+const pfs = fs.promises;
+
 
 router.get('/finish-type', (req, res, next) => {
     const finishType = [
