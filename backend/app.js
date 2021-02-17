@@ -23,7 +23,7 @@ app.use(cors());
 app.use('/api', optionRoutes);
 
 //app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('dist/customizer'));
+app.use(express.static('./dist/customizer'));
 // app.use(express.static(path.join(__dirname, 'node_modules')));
 // app.use(express.static(path.join(__dirname, 'customizer')));
 
