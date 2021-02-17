@@ -2,9 +2,9 @@ const http = require('http');
 const app = require('./backend/app');
 const debug = require('debug')('node-angular');
 
-const path = require('path');
+//const path = require('path');
 //console.log(path.join( __dirname, ''))
-app.use(express.static(path.join(__dirname, 'dist/customizer')));
+//app.use(express.static(path.join(__dirname, 'dist/customizer')));
 
 const normalizePort = val => {
     var port = parseInt(val, 10);
