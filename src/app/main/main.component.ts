@@ -95,6 +95,9 @@ export class MainComponent implements OnInit {
     console.log(data);
   }
 
+  // upload main page
+  
+
   ////// dynamically get data from back end
   filteredObj = { width: 0, height: 0, price: 0 };
   

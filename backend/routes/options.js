@@ -269,6 +269,7 @@ router.post('/admin-data/type', (req, res) => {
 router.get('/*', async (req, res, next) => {
     console.log('726', req.user, new Date())
     const html = await pfs.readFile('dist/index.html');
+    console.log(html)
     res.end(html);
     // res.redirect('/index.html');
 });
