@@ -32,7 +32,7 @@ app.use(express.static('../dist'))
 // For virtual routes use 
 app.use('*', (req, res) => 
 {
-  res.sendFile(__dirname +'/dist//index.html');
+  res.sendFile(__dirname +'/dist/index.html');
  });
 
 app.use((req, res, next) => {
