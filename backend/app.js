@@ -28,7 +28,9 @@ app.use('/', express.static('../dist'));
 //app.use(express.static(path.join(__dirname, 'node_modules')));
 //app.use(express.static(path.join(__dirname, 'dist')));
 // For static files
-app.use(express.static('../dist'))
+app.use(express.static('../dist'));
+app.set('view engine', 'html');
+app.engine('html', require('ejs').renderFile);
 // For virtual routes use 
 app.use('*', (req, res) => 
 {
