@@ -22,11 +22,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use('/api', optionRoutes);
 
-console.log(__dirname)
+//console.log(path.join( __dirname))
 //app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.static('../dist/customizer'));
-app.use(express.static(path.join(__dirname, 'node_modules')));
-app.use(express.static(path.join(__dirname, 'customizer')));
+//app.use(express.static(path.join(__dirname, 'node_modules')));
+//app.use(express.static(path.join(__dirname, 'dist/customizer')));
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

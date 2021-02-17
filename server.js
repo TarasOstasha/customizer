@@ -2,6 +2,10 @@ const http = require('http');
 const app = require('./backend/app');
 const debug = require('debug')('node-angular');
 
+const path = require('path');
+//console.log(path.join( __dirname, ''))
+app.use(express.static(path.join(__dirname, 'dist/customizer')));
+
 const normalizePort = val => {
     var port = parseInt(val, 10);
     if(isNaN(port)) {
@@ -44,7 +48,9 @@ app.set('port', port);
 const server = http.createServer(app);
 server.on('error', onError);
 server.on('listening', onListening);
-server.listen(port);
-console.log('server listen on port', port)
+server.listen(port, () => {
+    console.log('app is started and listening to the port ', port);
+});
+
 
 module.exports = app;
