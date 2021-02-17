@@ -13,7 +13,9 @@ const httpOptions = {
   styleUrls: ['./admin.component.less']
 })
 export class AdminComponent implements OnInit {
-  private url = 'http://localhost:3000/api/';
+  //private url = 'http://localhost:3000/api/';
+  private url = 'http://localhost:80/api/';
+
   adminPanelColorForm: FormGroup;
   adminPanelMaterialForm: FormGroup;
   adminPanelFinishTypeForm: FormGroup;

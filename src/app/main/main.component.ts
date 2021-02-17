@@ -68,7 +68,9 @@ export class MainComponent implements OnInit {
   materials: Select[] = [];
   oneSidedMaterial: Select[] = [];
   twoSidedMaterial: Select[] = [];
-  private url = 'http://localhost:3000/api/';
+  //private url = 'http://localhost:3000/api/';
+  private url = 'http://localhost:80/api/';
+
 
   async getFinishType() {
     // this._http.get('http://localhost:3000/api/posts')
@@ -96,7 +98,7 @@ export class MainComponent implements OnInit {
   }
 
   // upload main page
-  
+
 
   ////// dynamically get data from back end
   filteredObj = { width: 0, height: 0, price: 0 };
