@@ -24,7 +24,7 @@ app.use('/api', optionRoutes);
 
 //console.log(path.join( __dirname))
 //app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('../dist'));
+app.use('/', express.static('../dist'));
 //app.use(express.static(path.join(__dirname, 'node_modules')));
 //app.use(express.static(path.join(__dirname, 'dist/customizer')));
 
