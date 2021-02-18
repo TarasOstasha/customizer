@@ -26,9 +26,9 @@ app.use('/', express.static(path.join(__dirname, 'dist')));
 
 // routes
 app.use('/api', optionRoutes);
-// app.use((req, res, next) => {
-//     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-// });
+app.use((req, res, next) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 
 app.use((req, res, next) => {
