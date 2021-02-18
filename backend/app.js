@@ -26,24 +26,10 @@ app.use('/', express.static(path.join(__dirname, 'dist')));
 
 // routes
 app.use('/api', optionRoutes);
-app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// app.use((req, res, next) => {
+//     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
 
-//console.log(app.use(express.static('../dist')))
-//app.use(express.static(path.join(__dirname, 'public')));
-//app.use('/', express.static('../dist'));
-//app.use(express.static(path.join(__dirname, 'node_modules')));
-//app.use(express.static(path.join(__dirname, 'dist')));
-// For static files
-// app.use(express.static('../dist'));
-// app.set('view engine', 'html');
-// app.engine('html', require('ejs').renderFile);
-// // For virtual routes use 
-// app.use('*', (req, res) => 
-// {
-//   res.render(__dirname +'/dist/index.html');
-//  });
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

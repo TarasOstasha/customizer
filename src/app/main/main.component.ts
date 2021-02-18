@@ -13,6 +13,11 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+//var url = 'http://localhost/';
+
+// if(location.hostname == 'localhost') var url = 'http://localhost:80/' //dev
+// else var url = '/'; //production
+
 
 @Component({
   selector: 'app-main',
@@ -112,7 +117,7 @@ export class MainComponent implements OnInit {
         }
         const width = val.enteredWidthFt;
         const height = val.enteredHeightFt;
-        //let postData: any = await this._http.post(this.url + 'admin-data/product-dimensions', { width, height }, httpOptions).toPromise();
+        //let postData: any = await this._http.post(url + 'admin-data/product-dimensions', { width, height }, httpOptions).toPromise();
         //console.log(postData)
         let getPostData: any = await this._http.get(this.url + 'admin-data/get-product-dimensions').toPromise();
         const dimensionsValue = getPostData.data.find(item => {

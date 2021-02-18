@@ -64,7 +64,7 @@ router.get('/blank-material', async (req, res) => {
         // })
 
     } catch (error) {
-        console.log(error);
+        console.log(error, 'error line 67');
     }
 });
 router.get('/color-one-sided', (req, res) => {
