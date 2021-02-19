@@ -73,8 +73,8 @@ export class MainComponent implements OnInit {
   materials: Select[] = [];
   oneSidedMaterial: Select[] = [];
   twoSidedMaterial: Select[] = [];
-  //private url = 'http://localhost:3000/api/';
-  private url = 'http://localhost:80/api/';
+  private url = 'http://localhost:3000/api/';
+  //private url = 'http://localhost:80/api/';
 
 
   async getFinishType() {
@@ -107,12 +107,11 @@ export class MainComponent implements OnInit {
 
   ////// dynamically get data from back end
   filteredObj = { width: 0, height: 0, price: 0 };
-  
+
   onChangeSize() {
     try {
       this.clientForm.valueChanges.pipe(debounceTime(300)).subscribe(async (val) => {
-        //console.log(val.enteredWidthFt, val.enteredHeightFt);
-        if( val.enteredWidthFt && val.enteredHeightFt > 10 || val.enteredWidthFt && val.enteredHeightFt < 2 ) {
+        if (val.enteredWidthFt && val.enteredHeightFt > 10 || val.enteredWidthFt && val.enteredHeightFt < 2) {
           return
         }
         const width = val.enteredWidthFt;
@@ -124,18 +123,8 @@ export class MainComponent implements OnInit {
           return item.width == width && item.height == height;
         })
         this.filteredObj = Object.assign(dimensionsValue);
-        //console.log(this.dimensionsValue.width)
-        //let getData: any = await this._http.get(this.url + 'product-dimensions').toPromise();
-        //this.test = await getData
-        //console.log(this.test)
-        // let result = getData.data.find(function (e) {
-        //   return e.width == val.enteredWidthFt && e.height == val.enteredHeightFt;
-        // });
-        // this.filteredObj = Object.assign(result);  // made copy of result obj
-        // if(this.filteredObj == undefined || this.filteredObj == null) {
-        //   return console.log('Cannot convert undefined or null to object');
-        // }
         //console.log(this.filteredObj)
+
       });
     } catch (error) {
       console.error(error);
@@ -157,19 +146,23 @@ export class MainComponent implements OnInit {
       blankMaterialValue: ['', Validators.required],
       fullColorOneSidedValue: [''],
       fullColorTwoSidedValue: [''],
-      enteredWidthFt: [ 0, [Validators.required, Validators.max(10), Validators.min(2)] ],
+      enteredWidthFt: [0, [Validators.required, Validators.max(10), Validators.min(2)]],
       enteredWidthIn: [0],
-      enteredHeightFt: [ 0, [Validators.required, Validators.max(10), Validators.min(2)] ],
+      enteredHeightFt: [0, [Validators.required, Validators.max(10), Validators.min(2)]],
       enteredHeightIn: [0],
       enteredProdType: ['', Validators.required],
       userName: ['', Validators.required],
       address: ['', Validators.required]
     });
 
+    if (this.filteredObj == undefined || this.filteredObj == null) {
+      return console.log('Cannot convert undefined or null to object');
+    }
+   
     // on this method you can subscribe and listen all changes in live
-    // this.clientForm.valueChanges.subscribe(val => {
-    //   console.log(val);
-    // });    
+    this.clientForm.valueChanges.subscribe(val => {
+      console.log(val);
+    });
   }
   imagePreview: any;
   onImagePicked(event: Event) {
@@ -302,7 +295,7 @@ export class MainComponent implements OnInit {
   goToNext() {
     this.addressFlag = true;
     this.nextBtnFlag = true;
-   // this.sendRequestBtn = false;
+    // this.sendRequestBtn = false;
     //
   }
 

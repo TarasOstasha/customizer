@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainComponent } from './main/main.component';
 import { AdminComponent } from './admin/admin.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthService } from './services/auth.service.service';
 
 // Angular-Materials
 import { MatCardModule } from '@angular/material/card';
@@ -20,13 +23,20 @@ import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HeaderComponent } from './parts/header/header.component';
+import { FooterComponent } from './parts/footer/footer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    AdminComponent
+    AdminComponent,
+    LoginComponent,
+    SignupComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +53,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatListModule,
     MatStepperModule,
     MatExpansionModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

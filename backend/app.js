@@ -14,7 +14,11 @@ mongoose.connect('mongodb+srv://user:1111@cluster0.olmgj.mongodb.net/xyz_test?re
         console.log('Connection failed');
     });
 // connection to data base \\
+
+// import routes
 const optionRoutes = require('./routes/options');
+const userRoutes = require('./routes/user');
+
 const cors = require('cors');
 
 app.use(bodyParser.json());
@@ -26,6 +30,9 @@ app.use('/', express.static(path.join(__dirname, 'dist')));
 
 // routes
 app.use('/api', optionRoutes);
+app.use('/api', userRoutes);
+
+// render index.html from dist on real server
 app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });

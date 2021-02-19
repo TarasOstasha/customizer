@@ -1,0 +1,59 @@
+<div class="header_top">
+    <div class="container">
+        <div class="contacts">
+            <ul class="contacts_list">
+                <li><a href="">973 515 5151</a></li>
+                <li><a href="">sales@xyzdisplays.com</a></li>
+            </ul>
+        </div>
+        <div class="auth">
+            <ul class="authentification_list">
+                <li *ngIf="userIsAuthenticated">{{ userName }}</li>
+                <li *ngIf="!userIsAuthenticated"><a routerLink="/login">go to Login</a></li>
+                <li *ngIf="!userIsAuthenticated"><a routerLink="/signup">go to SignUp</a></li>
+                <li *ngIf="userIsAuthenticated">
+                    <button mat-button (click)="onLogout()">LogOut</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<div class="header_bottom">
+    <div class="top_section">
+        <div class="logo_wrapper">
+            <img src="../../../assets/imgs/header_bg.jpg" alt="logo">
+        </div>
+    </div>
+    <div class="bottom_section">
+        <ul>
+            <li>
+                <a href="https://www.xyzDisplays.com/Trade-Show-Displays-and-Exhibits-s/46.htm"
+                    class="vnav__link">Exhibits &amp; Displays</a>
+            </li>
+            <li>
+                <a href="https://www.xyzDisplays.com/Banner-Stands-s/51.htm" class="vnav__link">Banner Stands</a>
+            </li>
+            <li>
+                <a href="https://www.xyzDisplays.com/Touch-Screen-Kiosks-and-Digital-Signage-s/1604.htm"
+                    class="vnav__link">Digital Kiosks</a>
+            </li>
+            <li>
+                <a href="https://www.xyzDisplays.com/Trade-Show-Hanging-Banner-Displays-Signs-s/86.htm"
+                    class="vnav__link">Hanging Banners &amp; Signs</a>
+            </li>
+            <li>
+                <a href="https://www.xyzDisplays.com/Tabletop-Displays-s/60.htm" class="vnav__link">Tabletop
+                    Displays</a>
+            </li>
+            <li>
+                <a href="https://www.xyzDisplays.com/Trade-Show-Counters-and-Podiums-s/159.htm"
+                    class="vnav__link">Counters &amp; Podiums</a>
+            </li>
+            <li>
+                <a href="https://www.xyzDisplays.com/Tower-Displays-and-Columns-for-Trade-Shows-s/275.htm"
+                    class="vnav__link">Tower Displays</a>
+            </li>
+        </ul>
+    </div>
+</div>

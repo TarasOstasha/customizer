@@ -1,3 +1,4 @@
+<app-header></app-header>
 <form #postForm="ngForm" 
     [formGroup]="clientForm" (ngSubmit)="sendData(postForm)">
     <!-- <mat-accordion> -->
@@ -183,3 +184,5 @@
 <!-- <button mat-raised-button color="primary" type="submit" (click)="sendImg()">send img</button>
 </form> -->
 <a routerLink="/admin">go to admin panel</a>
+<a routerLink="/login">go to Login</a>
+<app-footer></app-footer>

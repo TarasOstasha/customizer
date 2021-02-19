@@ -1,3 +1,4 @@
+<app-header></app-header>
 <form 
     [formGroup]="adminPanelColorForm" 
     (ngSubmit)="saveColor()">
@@ -87,3 +88,5 @@
 <br>Touched: {{ adminPanelFinishTypeForm.touched }}
 <br>Valid: {{ adminPanelFinishTypeForm.valid }}
 <br>Value: {{ adminPanelFinishTypeForm.value | json }}
+
+<app-footer></app-footer>
