@@ -5,6 +5,9 @@ import { AuthData } from '../models/auth-data.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
+import { MatDialog } from '@angular/material/dialog';
+import { SuccessComponent } from '../success/success.component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,7 @@ export class AuthService {
   public emailName: string;
  
 
-  constructor(private _http: HttpClient, private _router: Router) { }
+  constructor(private _http: HttpClient, private _router: Router, private dialog: MatDialog) { }
 
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
@@ -29,11 +32,19 @@ export class AuthService {
   }
 
   createUser(email: string, password: string) {
+    let newUserData;
     const authData: AuthData = { email: email, password: password };
     this._http.post(this.url + 'user/signup', authData)
       .subscribe(response => {
-        console.log(response);
-      })
+        newUserData = response
+        console.log(newUserData.message)
+        this.dialog.open(SuccessComponent, { data: { message: 'You have been registered! Now you can login!' } })
+        this._router.navigate(['/']);
+        //console.log(successMessage.message);
+      }, error => {
+        this.authStatusListener.next(false);
+        console.log(error);
+      });
   }
 
   login(email: string, password: string) {
@@ -52,8 +63,17 @@ export class AuthService {
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           this.saveAuthData(token, expirationDate, this.emailName);
-          this._router.navigate(['/admin']);
+          console.log(response)
+          if(response.userEmail == 'test@gmail.com' && response.token == token) {
+            console.log('this is admin user');
+            this._router.navigate(['/admin']);
+          } else {
+            console.log('this is not admin user');
+            this._router.navigate(['/']);
+          }
         }
+      }, error => {
+        this.authStatusListener.next(false);
       });
   }
 

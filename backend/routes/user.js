@@ -15,19 +15,19 @@ router.post('/user/signup', (req, res) => {
                 password: hash
             });
             user.save()
-            .then(result => {
-                res.status(201).json({
-                    message: 'New User Created',
-                    result: result
+                .then(result => {
+                    res.status(201).json({
+                        message: 'New User Created',
+                        result: result
+                    });
+                })
+                .catch(err => {
+                    res.status(500).json({
+                        message: 'Invalid authentification credential!'
+                    });
                 });
-            })
-            .catch(err => {
-                res.status(500).json({
-                    error: err
-                });
-            });
         });
-    
+
 });
 
 router.post('/user/login', (req, res) => {
@@ -35,16 +35,16 @@ router.post('/user/login', (req, res) => {
     let fetchedUser;
     User.findOne({ email: req.body.email })
         .then(user => {
-            if(!user) {
+            if (!user) {
                 return res.status(401).json({
-                    message: 'Auth failed'
+                    message: 'Invalid authentification credential!'
                 });
             }
             fetchedUser = user;
             return bcrypt.compare(req.body.password, user.password)
         })
         .then(result => {
-            if(!result) {
+            if (!result) {
                 return res.status(401).json({
                     maessage: 'Auth failed'
                 });
@@ -60,7 +60,7 @@ router.post('/user/login', (req, res) => {
         })
         .catch(err => {
             return res.status(401).json({
-                maessage: 'Auth faoled'
+                maessage: 'Auth failed'
             });
         });
 });

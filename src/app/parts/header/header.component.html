@@ -9,8 +9,8 @@
         <div class="auth">
             <ul class="authentification_list">
                 <li *ngIf="userIsAuthenticated">{{ userName }}</li>
-                <li *ngIf="!userIsAuthenticated"><a routerLink="/login">go to Login</a></li>
-                <li *ngIf="!userIsAuthenticated"><a routerLink="/signup">go to SignUp</a></li>
+                <li *ngIf="!userIsAuthenticated"><a routerLink="/login" routerLinkActive="active">go to Login</a></li>
+                <li *ngIf="!userIsAuthenticated"><a routerLink="/signup" routerLinkActive="active">go to SignUp</a></li>
                 <li *ngIf="userIsAuthenticated">
                     <button mat-button (click)="onLogout()">LogOut</button>
                 </li>

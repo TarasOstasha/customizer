@@ -7,7 +7,7 @@ import { AuthService } from './services/auth.service.service';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
-  title = 'customizer';
+  title = 'custom XYZ';
 
   constructor(private _authService: AuthService) {}
 
