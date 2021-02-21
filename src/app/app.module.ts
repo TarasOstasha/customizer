@@ -26,10 +26,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { HeaderComponent } from './parts/header/header.component';
 import { FooterComponent } from './parts/footer/footer.component';
 import { ErrorComponent } from './error/error.component';
 import { SuccessComponent } from './success/success.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 
 @NgModule({
@@ -42,7 +45,8 @@ import { SuccessComponent } from './success/success.component';
     HeaderComponent,
     FooterComponent,
     ErrorComponent,
-    SuccessComponent
+    SuccessComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +65,8 @@ import { SuccessComponent } from './success/success.component';
     MatExpansionModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatToolbarModule
   ],
   providers: [
     AuthService,

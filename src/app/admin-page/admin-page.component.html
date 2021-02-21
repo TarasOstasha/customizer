@@ -1,0 +1,50 @@
+<app-header></app-header>
+<mat-card>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form (submit)="onSubmit()" *ngIf="!isLoading" [formGroup]="form">
+        <mat-form-field appearance="fill">
+            <mat-label>Enter Size</mat-label>
+            <input formControlName="size" matInput type="number" required>
+            <mat-error *ngIf="form.get('size').invalid">Please Enter a Valid Size</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Group of Displays</mat-label>
+            <input formControlName="group" matInput type="text" required>
+            <mat-error *ngIf="form.get('group').invalid">Please Enter a Valid Group</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Classification</mat-label>
+            <input formControlName="classification" matInput type="text" required>
+            <mat-error *ngIf="form.get('classification').invalid">Please Enter a Valid Classification</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Pattern</mat-label>
+            <input formControlName="pattern" matInput type="text" required>
+            <mat-error *ngIf="form.get('pattern').invalid">Please Enter a Valid Group</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Variety</mat-label>
+            <input formControlName="variety" matInput type="text" required>
+            <mat-error *ngIf="form.get('variety').invalid">Please Enter a Valid Pattern</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Model</mat-label>
+            <input formControlName="model" matInput type="text" required>
+            <mat-error *ngIf="form.get('model').invalid">Please Enter a Valid Model</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Price</mat-label>
+            <input formControlName="price" matInput type="number" required>
+            <mat-error *ngIf="form.get('price').invalid">Please Enter a Valid Price</mat-error>
+        </mat-form-field>
+        <div class="filePicker">
+            <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+            <input type="file" #filePicker (change)="onImagePicked($event)">
+            <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+                <img [src]="imagePreview">
+            </div>
+        </div>
+        <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Create Product</button>
+    </form>
+</mat-card>
+<app-footer></app-footer>

@@ -163,6 +163,8 @@ export class MainComponent implements OnInit {
     this.clientForm.valueChanges.subscribe(val => {
       console.log(val);
     });
+
+    
   }
   imagePreview: any;
   onImagePicked(event: Event) {
@@ -303,6 +305,13 @@ export class MainComponent implements OnInit {
     console.log(event)
     //const sendDataFlag = this.clientForm.get('address').touched
 
+  }
+
+
+
+  async getDataAdmin() {
+    const data: any = await this._http.get(this.url + 'admin-product-data').toPromise();
+    console.log(data)
   }
 
 

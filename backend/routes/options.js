@@ -115,6 +115,7 @@ router.post('/product-data', (req, res) => {
     }
 });
 
+
 router.post('/admin-data/product-dimensions', async (req, res) => {
     //console.log(req.body.width, '-width', req.body.height, '-height');
 
@@ -274,6 +275,43 @@ router.get('/*', async (req, res, next) => {
     // res.redirect('/index.html');
 });
 
+
+
+const MIME_TYPE_MAP = {
+    'image/png': 'png',
+    'image/jpeg': 'jpg',
+    'image/jpg': 'jpg',
+}
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const isValid = MIME_TYPE_MAP[file.mimetype];
+        let error = new Error('Invalid mime type');
+        if(isValid) {
+            error = null;
+        }
+        cb(error, 'backend/images');
+    },
+    filename: (req, file, cb) => {
+        const name = file.originalname.toLocaleLowerCase().split(' ').join('-');
+        const ext = MIME_TYPE_MAP[file.mimetype];
+        cb(null, name + '-' + Date.now() + '.' + ext );
+    }
+});
+
+router.post('/admin-product-data', multer({ storage: storage }).single('image') , (req, res) => {
+    console.log('product-data');
+    try {
+        const data = req.body;
+        console.log(data);
+        res.status(200).json({
+            message: 'admin-product data fetched successfully',
+            data: data
+        });
+    } catch (error) {
+        return res.status(400).json({ error: error.toString() });
+    }
+});
 
 
 
