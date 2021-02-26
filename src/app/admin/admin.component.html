@@ -1,92 +1,63 @@
 <app-header></app-header>
-<form 
-    [formGroup]="adminPanelColorForm" 
-    (ngSubmit)="saveColor()">
-    <mat-form-field appearance="fill" class="admin-panel-wrapper">
-        <mat-label>Add Color Value</mat-label>
-        <input class="admin-panel" matInput formControlName="color" minlength="3" required>
-        <mat-error *ngIf="adminPanelColorForm.errors?.required || adminPanelColorForm.get('color').dirty">Please Enter Color</mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!adminPanelColorForm.valid">Add</button>
-</form>
-<form
-    [formGroup]="adminPanelMaterialForm"
-    (ngSubmit)="saveMaterial()">
-    <mat-form-field appearance="fill" class="admin-panel-wrapper">
-        <mat-label>Add Material</mat-label>
-        <input class="admin-panel" matInput formControlName="material" minlength="3" required>
-        <mat-error *ngIf="adminPanelMaterialForm.errors?.required || adminPanelMaterialForm.get('material').dirty">Please Enter Material</mat-error>  
-    </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!adminPanelMaterialForm.valid">Add</button>
-</form>
-<form
-    [formGroup]="adminPanelFinishTypeForm"
-    (ngSubmit)="saveFinishType()">
-    <mat-form-field appearance="fill" class="admin-panel-wrapper">
-        <mat-label>Add Finish Type</mat-label>
-        <input class="admin-panel" matInput formControlName="type" minlength="3" required>
-        <mat-error *ngIf="adminPanelFinishTypeForm.errors?.required || adminPanelFinishTypeForm.get('type').dirty">Please Enter Type</mat-error>  
-    </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!adminPanelFinishTypeForm.valid">Add</button>
-</form>
-<h3>add sizes</h3>
-<form
-    [formGroup]="adminPanelDisplays"
-    (ngSubmit)="saveDisplays()">
-    <mat-form-field appearance="fill" class="admin-panel-wrapper">
-        <mat-label>Add Width</mat-label>
-        <input class="admin-panel" matInput formControlName="width" minlength="1" required>
-        <mat-error *ngIf="adminPanelDisplays.errors?.required || adminPanelDisplays.get('width').dirty">Please Enter Width of Product</mat-error>  
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="admin-panel-wrapper">
-            <mat-label>Add Height</mat-label>
-            <input class="admin-panel" matInput formControlName="height" minlength="1" required>
-            <mat-error *ngIf="adminPanelDisplays.errors?.required || adminPanelDisplays.get('height').dirty">Please Enter Height of Product</mat-error>  
+<div class="container">
+    <h3>add products</h3>
+    <form [formGroup]="adminPanelProduct" (ngSubmit)="saveProduct()">
+        <mat-form-field appearance="fill" class="admin-panel-wrapper">
+            <mat-label>Add Size</mat-label>
+            <input class="admin-panel" matInput formControlName="size" minlength="1" required>
+            <mat-error *ngIf="adminPanelProduct.errors?.required || adminPanelProduct.get('size').dirty">Please Enter
+                Size
+                of Product</mat-error>
         </mat-form-field>
-            <mat-form-field appearance="fill" class="admin-panel-wrapper">
-        <mat-label>Add Price</mat-label>
-        <input class="admin-panel" matInput formControlName="price" minlength="1" required>
-        <mat-error *ngIf="adminPanelDisplays.errors?.required || adminPanelDisplays.get('price').dirty">Please Enter thePrice of Product</mat-error>  
-    </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!adminPanelDisplays.valid">Add</button>
-</form>
-<!-- <form
-    [formGroup]="adminPanelDisplaySizeHeight"
-    (ngSubmit)="saveDisplaySize()">
-    <mat-form-field appearance="fill" class="admin-panel-wrapper">
-        <mat-label>Add Width</mat-label>
-        <input class="admin-panel" matInput formControlName="height" minlength="1" required>
-        <mat-error *ngIf="adminPanelDisplaySizeHeight.errors?.required || adminPanelDisplaySizeHeight.get('height').dirty">Please Enter Height of Product</mat-error>  
-    </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!adminPanelDisplaySizeHeight.valid">Add</button>
-</form> -->
-<!-- <form
-    [formGroup]="adminPanelDisplayPrice"
-    (ngSubmit)="saveDisplaySize()">
-    <mat-form-field appearance="fill" class="admin-panel-wrapper">
-        <mat-label>Add Width</mat-label>
-        <input class="admin-panel" matInput formControlName="price" minlength="1" required>
-        <mat-error *ngIf="adminPanelDisplayPrice.errors?.required || adminPanelDisplayPrice.get('price').dirty">Please Enter thePrice of Product</mat-error>  
-    </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!adminPanelDisplayPrice.valid">Add</button>
-</form> -->
+        <mat-form-field appearance="fill" class="admin-panel-wrapper">
+            <mat-label>Add Group</mat-label>
+            <input class="admin-panel" matInput formControlName="group" minlength="1" required>
+            <mat-error *ngIf="adminPanelProduct.errors?.required || adminPanelProduct.get('group').dirty">Please Enter
+                Group
+                of Product</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="admin-panel-wrapper">
+            <mat-label>Add Classification</mat-label>
+            <input class="admin-panel" matInput formControlName="classification" minlength="1" required>
+            <mat-error *ngIf="adminPanelProduct.errors?.required || adminPanelProduct.get('classification').dirty">
+                Please
+                Enter Classification of Product</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="admin-panel-wrapper">
+            <mat-label>Add Pattern</mat-label>
+            <input class="admin-panel" matInput formControlName="pattern" minlength="1" required>
+            <mat-error *ngIf="adminPanelProduct.errors?.required || adminPanelProduct.get('pattern').dirty">Please
+                Enter a Pattern of Product</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="admin-panel-wrapper">
+            <mat-label>Add Variety</mat-label>
+            <input class="admin-panel" matInput formControlName="variety" minlength="1" required>
+            <mat-error *ngIf="adminPanelProduct.errors?.required || adminPanelProduct.get('variety').dirty">Please
+                Enter Variety of Product</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="admin-panel-wrapper">
+            <mat-label>Add Model</mat-label>
+            <input class="admin-panel" matInput formControlName="model" minlength="1" required>
+            <mat-error *ngIf="adminPanelProduct.errors?.required || adminPanelProduct.get('model').dirty">Please
+                Enter Model of Product</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="admin-panel-wrapper">
+            <mat-label>Add Price</mat-label>
+            <input class="admin-panel" matInput formControlName="price" minlength="1" required>
+            <mat-error *ngIf="adminPanelProduct.errors?.required || adminPanelProduct.get('price').dirty">Please
+                Enter Price of Product</mat-error>
+        </mat-form-field>
 
-<h3>adminPanelColorForm</h3>
-<br>Dirty: {{ adminPanelColorForm.dirty }}
-<br>Touched: {{ adminPanelColorForm.touched }}
-<br>Valid: {{ adminPanelColorForm.valid }}
-<br>Value: {{ adminPanelColorForm.value | json }}
+        <button mat-raised-button color="primary" [disabled]="!adminPanelProduct.valid">Add</button>
+    </form>
 
-<h3>adminPanelMaterialForm</h3>
-<br>Dirty: {{ adminPanelMaterialForm.dirty }}
-<br>Touched: {{ adminPanelMaterialForm.touched }}
-<br>Valid: {{ adminPanelMaterialForm.valid }}
-<br>Value: {{ adminPanelMaterialForm.value | json }}
 
-<h3>adminPanelFinishTypeForm</h3>
-<br>Dirty: {{ adminPanelFinishTypeForm.dirty }}
-<br>Touched: {{ adminPanelFinishTypeForm.touched }}
-<br>Valid: {{ adminPanelFinishTypeForm.valid }}
-<br>Value: {{ adminPanelFinishTypeForm.value | json }}
+    <h3>adminPanelProduct</h3>
+    <br>Dirty: {{ adminPanelProduct.dirty }}
+    <br>Touched: {{ adminPanelProduct.touched }}
+    <br>Valid: {{ adminPanelProduct.valid }}
+    <br>Value: {{ adminPanelProduct.value | json }}
+</div>
+
 
 <app-footer></app-footer>

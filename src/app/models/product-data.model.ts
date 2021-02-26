@@ -5,7 +5,11 @@ export interface MainProduct {
     pattern: string;
     variety: string;
     model: string;
+    price: number;
 }
+
+
+
 
 
 // example

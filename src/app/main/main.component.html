@@ -1,25 +1,169 @@
 <app-header></app-header>
-<form #postForm="ngForm" 
-    [formGroup]="clientForm" (ngSubmit)="sendData(postForm)">
+<form #postForm="ngForm" [formGroup]="clientForm" (ngSubmit)="sendData(postForm)">
     <!-- <mat-accordion> -->
     <!-- 1. Choose the Style -->
     <mat-expansion-panel [expanded]="step === 0">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                1. Choose the Style
+                1. Shop By Size
             </mat-panel-title>
         </mat-expansion-panel-header>
         <p class="img-row">
-            <strong class="strong">Color:</strong>
+            <!-- <strong class="strong">Color:</strong> -->
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-                <mat-button-toggle value="bold" (click)="chooseBlank()">Blank</mat-button-toggle>
-                <mat-button-toggle value="italic" (click)="chooseFullColor()">Full Color</mat-button-toggle>
+                <mat-button-toggle value="bold" (click)="chooseEightFoot()">8Ft</mat-button-toggle>
+                <mat-button-toggle value="italic" (click)="chooseTenFoot()">10Ft</mat-button-toggle>
+                <mat-button-toggle value="italic" (click)="chooseTwentyFoot()">20Ft</mat-button-toggle>
+                <mat-button-toggle value="italic" (click)="chooseThirtyFoot()">30Ft</mat-button-toggle>
             </mat-button-toggle-group>
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" *ngIf="fullColor">
+            <!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style" *ngIf="fullColor">
                 <mat-button-toggle value="bold" (click)="chooseOneSided()">One Sided</mat-button-toggle>
                 <mat-button-toggle value="italic" (click)="chooseTwoSided()">Two Sided</mat-button-toggle>
-            </mat-button-toggle-group>
+            </mat-button-toggle-group> -->
         </p>
+        <div class="row" *ngIf="!initStatus">
+            <div class="col-md-3">
+                <!-- 1 -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            3. filter 1
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a Finishing Type</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let option of options" [value]="option.value">
+                                    <span>{{ option.value }}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </mat-expansion-panel>
+                <!-- 2 -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            3. filter 2
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a Finishing Type</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let option of type" [value]="option.value">
+                                    <span>{{ option.value }}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </mat-expansion-panel>
+                <!-- 3 -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            3. filter 3
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a Finishing Type</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let option of type" [value]="option.value">
+                                    <span>{{ option.value }}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </mat-expansion-panel>
+                <!-- 4 -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            4. filter 4
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a Finishing Type</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let option of frame" [value]="option.value">
+                                    <span>{{ option.value }}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </mat-expansion-panel>
+                <!-- 5 -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            5. filter 5
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a Finishing Type</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let option of model" [value]="option.value">
+                                    <span>{{ option.value }}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </mat-expansion-panel>
+                <!-- 6 -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            6. filter 6
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Select a Finishing Type</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let option of options1" [value]="option.value">
+                                    <span>{{ option.value }}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </mat-expansion-panel>
+                
+            </div>
+            <div class="col-md-9">
+                <div class="product_list">
+                    <div class="row card-group">
+                        <div class="col-4 my-card" *ngFor="let product of eightFoot">
+                            <mat-card class="example-card">
+                                <mat-card-header>
+                                    <div mat-card-avatar class="example-header-image">
+                                        <img src="../../assets/imgs/header_bg.png" alt="logo">
+                                    </div>
+                                    <mat-card-title>{{ product.name }}</mat-card-title>
+                                    <mat-card-subtitle>{{ product.type }}</mat-card-subtitle>
+                                </mat-card-header>
+                                <img mat-card-image
+                                    src="https://cdn3.volusion.com/wgjfq.aujvw/v/vspfiles/photos/cb42800-1.jpg"
+                                    alt="Photo of a Shiba Inu">
+                                <mat-card-content>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, laborum?
+                                    </p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <a [href]="product.link" mat-button>Buy</a>
+                                    <!-- <button mat-button>SHARE</button> -->
+                                </mat-card-actions>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <p class="img-row">
             <img src="../../assets/imgs/blank-color.jpg" alt="blank" *ngIf="blankImg">
             <img src="../../assets/imgs/full-color.jpg" alt="color" *ngIf="colorImg">
@@ -39,7 +183,7 @@
                 <mat-select *ngIf="blankColorFlag" formControlName="blankMaterialValue"
                     (selectionChange)="selectedBlankMaterial()">
                     <mat-option *ngFor="let material of materials" [value]="material.prodMaterial">
-                        {{ material.prodMaterial  }}                     
+                        {{ material.prodMaterial  }}
                     </mat-option>
                 </mat-select>
                 <!-- FULL COLOR ONE SIDE SELECTED -->
@@ -73,7 +217,8 @@
             <strong>Width: </strong>
             <mat-form-field class="example-form-field">
                 <mat-label>Ft</mat-label>
-                <input matInput type="number" min="2" max="10" formControlName="enteredWidthFt" (change)="onChangeSize()">
+                <input matInput type="number" min="2" max="10" formControlName="enteredWidthFt"
+                    (change)="onChangeSize()">
                 <mat-error *ngIf="clientForm.get('enteredWidthFt').invalid">The maximum size is 10FT</mat-error>
             </mat-form-field>
             <mat-form-field class="example-form-field">
@@ -93,7 +238,7 @@
                 <input matInput type="text" formControlName="enteredHeightIn">
             </mat-form-field>
         </p>
-        <strong >Price: {{ filteredObj.price }} $</strong><br>
+        <strong>Price: {{ filteredObj.price }} $</strong><br>
         <strong>Sq Fit: {{ filteredObj.width * filteredObj.height }}</strong>
     </mat-expansion-panel>
     <!-- 4. Select A Finishing Type -->
@@ -136,12 +281,8 @@
             <ng-template matStepLabel>Fill out your address</ng-template>
             <mat-form-field>
                 <mat-label>Address</mat-label>
-                <input name="address" 
-                    matInput 
-                    (selectionChange)="addressOnChange($event.target)"
-                    formControlName="address" 
-                    placeholder="Ex. 1 Main St, New York, NY"
-                    required>
+                <input name="address" matInput (selectionChange)="addressOnChange($event.target)"
+                    formControlName="address" placeholder="Ex. 1 Main St, New York, NY" required>
             </mat-form-field>
             <div>
                 <button mat-button matStepperPrevious (click)="cancelEvent($event)">Back</button>
@@ -189,5 +330,3 @@
 <app-footer></app-footer>
 
 <button (click)="getDataAdmin()">get admin data</button>
-
-

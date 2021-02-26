@@ -136,32 +136,4 @@ export class AuthService {
 
 
 
-
-
-  addPostAdmin(size: string,group: string,classification:string,pattern:string,variety:string,model:string,price:string,image: File) {
-    const postData = new FormData();
-    postData.append('size', size);
-    postData.append('group', group);
-    postData.append('classification', classification);
-    postData.append('pattern', pattern);
-    postData.append('variety', variety);
-    postData.append('model', model);
-    postData.append('price', price);
-    postData.append('image', image);
-    this._http.post<any>('http://localhost:3000/api/admin-product-data', postData).subscribe(responseData => {
-      console.log(responseData, 'responseData');
-      const post = { 
-        size: responseData.size,
-        group: responseData.group,
-        classification: responseData.classification,
-        pattern: responseData.pattern,
-        variety: responseData.variety,
-        model: responseData.model,
-        price: responseData.price
-       }
-       console.log(post);
-    });
-  }
-
-
 }

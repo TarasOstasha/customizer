@@ -14,75 +14,49 @@ const httpOptions = {
 })
 export class AdminComponent implements OnInit {
   //private url = 'http://localhost:3000/api/';
-  private url = 'http://localhost:80/api/';
+  private url = 'http://localhost:3000/api/';
 
-  adminPanelColorForm: FormGroup;
-  adminPanelMaterialForm: FormGroup;
-  adminPanelFinishTypeForm: FormGroup;
-  adminPanelDisplays: FormGroup;
+  adminPanelProduct: FormGroup;
 
 
   constructor(private _http: HttpClient) { }
 
   ngOnInit(): void {
-    this.adminPanelColorForm = new FormGroup({
-      color: new FormControl()
-    });
-
-    this.adminPanelMaterialForm = new FormGroup({
-      material: new FormControl()
-    });
-
-    this.adminPanelFinishTypeForm = new FormGroup({
-      type: new FormControl()
-    });
-
-    this.adminPanelDisplays = new FormGroup({
-      width: new FormControl(),
-      height: new FormControl(),
-      price: new FormControl
+   
+    this.adminPanelProduct = new FormGroup({
+      size: new FormControl(),
+      group: new FormControl(),
+      classification: new FormControl(),
+      pattern: new FormControl(),
+      variety: new FormControl(),
+      model: new FormControl(),
+      price: new FormControl()
     });
   }
-
-  saveColor() {
-    //console.log('Saved : ' + JSON.stringify(this.adminPanelForm.value));
-    //console.log(this.adminPanelForm.get('color').touched);
-    this.adminPanelColorForm.markAllAsTouched(); // this fixed mat error issue (if you delete that the mat error tag will not be showing)
+  //
+  async saveProduct() {
     const adminData = {
-      color: this.adminPanelColorForm.value.color,
+      size: this.adminPanelProduct.value.size,
+      group: this.adminPanelProduct.value.group,
+      classification: this.adminPanelProduct.value.classification,
+      pattern: this.adminPanelProduct.value.pattern,
+      variety: this.adminPanelProduct.value.variety,
+      model: this.adminPanelProduct.value.model,
+      price: this.adminPanelProduct.value.price
     };
-    const postSendData = this._http.post(this.url + 'admin-data/color-one-sided', JSON.stringify(adminData), httpOptions).toPromise();
-    this.adminPanelColorForm.reset();
-  }
-  saveMaterial() {
-    const adminData = {
-      material: this.adminPanelMaterialForm.value.material,
-      type: this.adminPanelMaterialForm.value.type
-    };
-    const postSendData = this._http.post(this.url + 'admin-data/material', JSON.stringify(adminData), httpOptions).toPromise();
-    this.adminPanelColorForm.reset();
-  }
-
-  saveFinishType() {
-    const adminData = {
-      color: this.adminPanelColorForm.value.color,
-      material: this.adminPanelFinishTypeForm.value.material,
-      type: this.adminPanelFinishTypeForm.value.type
-    };
-    const postSendData = this._http.post(this.url + 'admin-data/type', JSON.stringify(adminData), httpOptions).toPromise();
-    this.adminPanelColorForm.reset();
-  }
-
-  saveDisplays() {
-    const adminData = {
-      width: this.adminPanelDisplays.value.width,
-      height: this.adminPanelDisplays.value.height,
-      price: this.adminPanelDisplays.value.price
-    };
-    const postSendData = this._http.post(this.url + 'admin-data/product-dimensions', JSON.stringify(adminData), httpOptions).toPromise();
     console.log(adminData)
+    const postSendData = await this._http.post(this.url + 'admin-data/my-prod', JSON.stringify(adminData), httpOptions).toPromise();
+    console.log(postSendData)
     //this.adminPanelDisplays.reset();
   }
+  
+
+
+
+
+
+
+
 
 
 }

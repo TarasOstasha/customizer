@@ -1,10 +1,12 @@
 const express = require('express');
+//const multer = require('multer');
 const router = express.Router();
 
 const colorModel = require('../models/colorModel');
 const materialModel = require('../models/materialModel');
 const typeModel = require('../models/typeModel');
 const dimensionsModel = require('../models/dimensionsModel');
+const AdminProduct = require('../models/productModel');
 
 const fs = require('fs');
 const pfs = fs.promises;
@@ -277,41 +279,86 @@ router.get('/*', async (req, res, next) => {
 
 
 
-const MIME_TYPE_MAP = {
-    'image/png': 'png',
-    'image/jpeg': 'jpg',
-    'image/jpg': 'jpg',
-}
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const isValid = MIME_TYPE_MAP[file.mimetype];
-        let error = new Error('Invalid mime type');
-        if(isValid) {
-            error = null;
-        }
-        cb(error, 'backend/images');
-    },
-    filename: (req, file, cb) => {
-        const name = file.originalname.toLocaleLowerCase().split(' ').join('-');
-        const ext = MIME_TYPE_MAP[file.mimetype];
-        cb(null, name + '-' + Date.now() + '.' + ext );
-    }
+// const MIME_TYPE_MAP = {
+//     'image/png': 'png',
+//     'image/jpeg': 'jpg',
+//     'image/jpg': 'jpg',
+// }
+
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         const isValid = MIME_TYPE_MAP[file.mimetype];
+//         let error = new Error('Invalid mime type');
+//         if (isValid) {
+//             error = null;
+//         }
+//         cb(error, 'backend/images');
+//     },
+//     filename: (req, file, cb) => {
+//         const name = file.originalname.toLocaleLowerCase().split(' ').join('-');
+//         const ext = MIME_TYPE_MAP[file.mimetype];
+//         cb(null, name + '-' + Date.now() + '.' + ext);
+//     }
+// });
+
+// router.post('/admin-product-data', multer({ storage: storage }).single('image'), (req, res) => {
+//     console.log(req.body)
+//     const url = req.protocol + "://" + req.get("host");
+//     const product = new Product({
+//         size: req.body.size,
+//         group: req.body.group,
+//         classification: req.body.classification,
+//         pattern: req.body.pattern,
+//         variety: req.body.variety,
+//         model: req.body.model,
+//         product_code: req.body.product_code,
+//         price: req.body.price,
+//         imagePath: url + "/images/" + req.file.filename
+//     });
+//     product.save()
+//         .then(createdProduct => {
+//             res.status(200).json({
+//                 message: 'admin-product data fetched successfully',
+//                 data: {
+//                     ...createdProduct,
+//                     id: createdProduct._id
+//                 }
+//             })
+//         })
+// });
+//  imagePath: { type: String, required: true }
+
+router.post('/admin-product-data', (req, res) => {
+    console.log(req.body)
+    const product = new AdminProduct({
+        size: req.body.size,
+        group: req.body.group,
+        classification: req.body.classification,
+        pattern: req.body.pattern,
+        variety: req.body.variety,
+        model: req.body.model,
+        price: req.body.price,
+    });
+    product.save();
+    res.status(200).json({
+        message: 'admin-product data fetched successfully',
+        data: product
+    })
+
 });
 
-router.post('/admin-product-data', multer({ storage: storage }).single('image') , (req, res) => {
-    console.log('product-data');
-    try {
-        const data = req.body;
-        console.log(data);
-        res.status(200).json({
-            message: 'admin-product data fetched successfully',
-            data: data
-        });
-    } catch (error) {
-        return res.status(400).json({ error: error.toString() });
-    }
+
+router.get('/admin-product-data', async (req, res) => {
+   // const documents = await AdminProduct.find();
+   const documents = await { test: 'one' }
+    //console.log(documents);
+    res.status(200).json({
+        message: "Posts fetched successfully!",
+        posts: documents
+    });
 });
+
+
 
 
 

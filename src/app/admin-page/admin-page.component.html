@@ -37,14 +37,15 @@
             <input formControlName="price" matInput type="number" required>
             <mat-error *ngIf="form.get('price').invalid">Please Enter a Valid Price</mat-error>
         </mat-form-field>
-        <div class="filePicker">
+        <!-- <div class="filePicker">
             <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
             <input type="file" #filePicker (change)="onImagePicked($event)">
             <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
                 <img [src]="imagePreview">
             </div>
-        </div>
+        </div> -->
         <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Create Product</button>
     </form>
 </mat-card>
+<button (click)="getItem()">GET</button>
 <app-footer></app-footer>

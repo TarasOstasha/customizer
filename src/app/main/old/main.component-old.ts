@@ -25,10 +25,6 @@ const httpOptions = {
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
-  // new
-  initStatus: boolean;
-
-  // end new
 
   // material selected value
   blankSelectedValue: string;
@@ -80,113 +76,6 @@ export class MainComponent implements OnInit {
   private url = 'http://localhost:3000/api/';
   //private url = 'http://localhost:80/api/';
 
-  eightFoot = [
-    {
-      name: '8ft x 8ft Verge Single-Sided Pop Up SEG Display',
-      size: 8,
-      type: 'Popup Displays',
-      backlit: true,
-      frame: 'curved',
-      price: 255,
-      model: 'Single-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=cb40960'
-    },
-    {
-      name: '8ft x 8ft Verge Single-Sided Pop Up SEG Display',
-      size: 8,
-      type: 'Tension Fabric Displays',
-      backlit: true,
-      frame: 'straight',
-      price: 255,
-      model: 'Double-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=cb40962'
-    },
-    {
-      name: '8ft x 8ft Vector Frame Essential SEG Fabric Light Box',
-      size: 8,
-      type: 'SEG Displays',
-      backlit: false,
-      frame: 'curved',
-      price: 305,
-      model: 'Single-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or100050'
-    },
-    {
-      name: '8ft x 8ft Vector Frame Essential SEG Fabric Light Box',
-      size: 8,
-      price: 320,
-      model: 'Double-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or100052'
-    },
-    {
-      name: '8ft x 8ft Vector Frame SEG Fabric Banner Display ',
-      size: 8,
-      price: 350,
-      model: 'Single-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or70080'
-    },
-    {
-      name: '8ft x 8ft Vector Frame SEG Fabric Banner Display ',
-      size: 8,
-      price: 400,
-      model: 'Double-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or70082'
-    }
-
-  ]
-  options = [
-    { value: 'All' },
-    { value: 'example' },
-    { value: 'Tension Fabric Displays' },
-    { value: 'SEG Displays' }
-  ]
-
-  type = [
-    { value: 'All' },
-    { value: 'Backlit' },
-    { value: 'Not-Backlit' },
-  ]
-
-  frame = [
-    { value: 'All' },
-    { value: 'Curved' },
-    { value: 'Straight' },
-  ]
-
-  model = [
-    { value: 'All' },
-    { value: 'Single-Sided' },
-    { value: 'Double-Sided' }
-  ]
-
-  options1 = [
-    { value: 'Popup Only' },
-    { value: 'End Caps' },
-    { value: 'Front Graphic Only' }
-  ]
-  
-
-  // SIZES 
-  chooseEightFoot() {
-    this.initStatus = !this.initStatus;
-  }
-
-  chooseTenFoot() {
-
-  }
-
-  chooseTwentyFoot() {
-
-  }
-
-  chooseThirtyFoot() {
-
-  }
-
-  nameOfOption() {
-
-  }
-  // END SIZES
 
   async getFinishType() {
     // this._http.get('http://localhost:3000/api/posts')
