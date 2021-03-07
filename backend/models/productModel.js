@@ -7,7 +7,8 @@ const productSchema = mongoose.Schema({
     pattern: { type: String, required: true },
     variety: { type: String, required: true },
     model: { type: String, required: true },
-    price: { type: String, required: true }
+    price: { type: String, required: true },
+    imagePath: { type: String, required: true }
 });
 
 

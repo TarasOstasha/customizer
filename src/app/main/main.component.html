@@ -21,10 +21,10 @@
                 <mat-button-toggle value="italic" (click)="chooseTwoSided()">Two Sided</mat-button-toggle>
             </mat-button-toggle-group> -->
         </p>
-        <div class="row" *ngIf="!initStatus">
+        <div class="row" *ngIf="initStatus">
             <div class="col-md-3">
                 <!-- 1 -->
-                <mat-expansion-panel>
+                <mat-expansion-panel >
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             3. filter 1
@@ -136,7 +136,7 @@
             <div class="col-md-9">
                 <div class="product_list">
                     <div class="row card-group">
-                        <div class="col-4 my-card" *ngFor="let product of eightFoot">
+                        <div class="col-4 my-card" *ngFor="let product of productsBySize">
                             <mat-card class="example-card">
                                 <mat-card-header>
                                     <div mat-card-avatar class="example-header-image">
@@ -146,7 +146,7 @@
                                     <mat-card-subtitle>{{ product.type }}</mat-card-subtitle>
                                 </mat-card-header>
                                 <img mat-card-image
-                                    src="https://cdn3.volusion.com/wgjfq.aujvw/v/vspfiles/photos/cb42800-1.jpg"
+                                    src="../../assets/imgs/example.jpg"
                                     alt="Photo of a Shiba Inu">
                                 <mat-card-content>
                                     <p>
@@ -154,7 +154,7 @@
                                     </p>
                                 </mat-card-content>
                                 <mat-card-actions>
-                                    <a [href]="product.link" mat-button>Buy</a>
+                                    <a [href]="product.link" mat-button>{{ product.price }}</a>
                                     <!-- <button mat-button>SHARE</button> -->
                                 </mat-card-actions>
                             </mat-card>

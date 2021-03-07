@@ -16,21 +16,25 @@ mongoose.connect('mongodb+srv://user:1111@cluster0.olmgj.mongodb.net/xyz_test?re
 // connection to data base \\
 
 // import routes
-const optionRoutes = require('./routes/options');
+//const optionRoutes = require('./routes/options');
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/userAdmin');
 
 const cors = require('cors');
 
+// old
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
+
 app.use(cors());
 //app.use('images', express.static(path.join('backend/images')));
 app.use(express.static(path.join(__dirname, 'assets/imgs')));
 app.use('/', express.static(path.join(__dirname, 'dist')));
 
 // routes
-app.use('/api', optionRoutes);
+//app.use('/api', optionRoutes);
 app.use('/api', userRoutes);
 app.use('/api', adminRoutes);
 
@@ -51,7 +55,7 @@ app.use((req, res, next) => {
         "GET, POST, PATCH, PUT, DELETE, OPTIONS"
     );
     res.setHeader(
-        "Access-Control-Allow-Headers", 
+        "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
     next();

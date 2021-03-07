@@ -3,6 +3,7 @@ import { NgForm, FormControl } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { AdminPageService } from '../services/admin-page.service';
 
 // models
 import { Size } from '../models/size';
@@ -80,60 +81,60 @@ export class MainComponent implements OnInit {
   private url = 'http://localhost:3000/api/';
   //private url = 'http://localhost:80/api/';
 
-  eightFoot = [
-    {
-      name: '8ft x 8ft Verge Single-Sided Pop Up SEG Display',
-      size: 8,
-      type: 'Popup Displays',
-      backlit: true,
-      frame: 'curved',
-      price: 255,
-      model: 'Single-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=cb40960'
-    },
-    {
-      name: '8ft x 8ft Verge Single-Sided Pop Up SEG Display',
-      size: 8,
-      type: 'Tension Fabric Displays',
-      backlit: true,
-      frame: 'straight',
-      price: 255,
-      model: 'Double-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=cb40962'
-    },
-    {
-      name: '8ft x 8ft Vector Frame Essential SEG Fabric Light Box',
-      size: 8,
-      type: 'SEG Displays',
-      backlit: false,
-      frame: 'curved',
-      price: 305,
-      model: 'Single-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or100050'
-    },
-    {
-      name: '8ft x 8ft Vector Frame Essential SEG Fabric Light Box',
-      size: 8,
-      price: 320,
-      model: 'Double-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or100052'
-    },
-    {
-      name: '8ft x 8ft Vector Frame SEG Fabric Banner Display ',
-      size: 8,
-      price: 350,
-      model: 'Single-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or70080'
-    },
-    {
-      name: '8ft x 8ft Vector Frame SEG Fabric Banner Display ',
-      size: 8,
-      price: 400,
-      model: 'Double-Sided',
-      link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or70082'
-    }
+  // eightFoot = [
+  //   {
+  //     name: '8ft x 8ft Verge Single-Sided Pop Up SEG Display',
+  //     size: 8,
+  //     type: 'Popup Displays',
+  //     backlit: true,
+  //     frame: 'curved',
+  //     price: 255,
+  //     model: 'Single-Sided',
+  //     link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=cb40960'
+  //   },
+  //   {
+  //     name: '8ft x 8ft Verge Single-Sided Pop Up SEG Display',
+  //     size: 8,
+  //     type: 'Tension Fabric Displays',
+  //     backlit: true,
+  //     frame: 'straight',
+  //     price: 255,
+  //     model: 'Double-Sided',
+  //     link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=cb40962'
+  //   },
+  //   {
+  //     name: '8ft x 8ft Vector Frame Essential SEG Fabric Light Box',
+  //     size: 8,
+  //     type: 'SEG Displays',
+  //     backlit: false,
+  //     frame: 'curved',
+  //     price: 305,
+  //     model: 'Single-Sided',
+  //     link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or100050'
+  //   },
+  //   {
+  //     name: '8ft x 8ft Vector Frame Essential SEG Fabric Light Box',
+  //     size: 8,
+  //     price: 320,
+  //     model: 'Double-Sided',
+  //     link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or100052'
+  //   },
+  //   {
+  //     name: '8ft x 8ft Vector Frame SEG Fabric Banner Display ',
+  //     size: 8,
+  //     price: 350,
+  //     model: 'Single-Sided',
+  //     link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or70080'
+  //   },
+  //   {
+  //     name: '8ft x 8ft Vector Frame SEG Fabric Banner Display ',
+  //     size: 8,
+  //     price: 400,
+  //     model: 'Double-Sided',
+  //     link: 'https://www.xyzdisplays.com/ProductDetails.asp?ProductCode=or70082'
+  //   }
 
-  ]
+  // ]
   options = [
     { value: 'All' },
     { value: 'example' },
@@ -164,23 +165,52 @@ export class MainComponent implements OnInit {
     { value: 'End Caps' },
     { value: 'Front Graphic Only' }
   ]
-  
+  products: any = [];
+  eightFoot: any = [];
+  tenFoot: any = [];
+  twentyFoot: any = [];
+  thirtyFoot: any = [];
+  productsBySize: any = [];
 
   // SIZES 
-  chooseEightFoot() {
-    this.initStatus = !this.initStatus;
+  async chooseEightFoot() {
+    this.initStatus = true;
+    this.products = await this._admin.getProducts(); 
+    this.eightFoot = this.products.data.filter(filteredProd => {
+       return filteredProd.size == 8;
+    });
+    this.productsBySize = this.eightFoot; 
+    console.log(this.productsBySize);
   }
 
-  chooseTenFoot() {
-
+  async chooseTenFoot() {
+    this.initStatus = true;
+    this.products = await this._admin.getProducts(); 
+    this.tenFoot = this.products.data.filter(filteredProd => {
+       return filteredProd.size == 10;
+    });
+    this.productsBySize = this.tenFoot;
+    console.log(this.productsBySize);
   }
 
-  chooseTwentyFoot() {
-
+  async chooseTwentyFoot() {
+    this.initStatus = true;
+    this.products = await this._admin.getProducts(); 
+    this.twentyFoot = this.products.data.filter(filteredProd => {
+       return filteredProd.size == 20;
+    });
+    this.productsBySize = this.twentyFoot;
+    console.log(this.productsBySize);
   }
 
-  chooseThirtyFoot() {
-
+  async chooseThirtyFoot() {
+    this.initStatus = true;
+    this.products = await this._admin.getProducts(); 
+    this.thirtyFoot = this.products.data.filter(filteredProd => {
+       return filteredProd.size == 30;
+    });
+    this.productsBySize = this.thirtyFoot;
+    console.log(this.productsBySize);
   }
 
   nameOfOption() {
@@ -249,7 +279,8 @@ export class MainComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _http: HttpClient
+    private _http: HttpClient,
+    private _admin: AdminPageService
   ) { }
 
   ngOnInit() {

@@ -45,7 +45,7 @@ export class AdminPageComponent implements OnInit {
   }
   userAdminData: MainProduct;
   onSubmit() {
-    //console.log(this.form.value, 'admin panel');
+    console.log(this.form.value, 'admin-page');
     if(this.form.invalid) {
       return;
     }

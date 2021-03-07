@@ -7,7 +7,7 @@ import { MainProduct } from '../models/product-data.model';
 
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }) 
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable({
@@ -25,6 +25,29 @@ export class AdminPageService {
 
   getPosts() {
     return this._http.get<MainProduct>(this.url + 'admin-product-data').toPromise();
+  }
+
+  // test
+  getProducts() {
+    return this._http.get('http://localhost:3000/api/products').toPromise();
+  }
+  //test
+
+  addMyPostAdmin(data: any, image: File) {
+    const postData: any = new FormData();
+    postData.append('size', data.size);
+    postData.append('group', data.group);
+    postData.append('classification', data.classification);
+    postData.append('pattern', data.pattern);
+    postData.append('variety', data.variety);
+    postData.append('model', data.model);
+    postData.append('price', data.price);
+    postData.append('image', image);
+
+    this._http.post(this.url + 'admin-data/my-prod', postData).subscribe(
+      (response) => console.log(response),
+      (erorr) => console.log(erorr)
+    )
   }
 
   // addPostAdmin(
